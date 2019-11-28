@@ -3,37 +3,47 @@
 {% block title %}初回登録画面{% endblock title %}
 {% block page_title %}参加者登録{% endblock page_title %}
 {% block main %}
-<form method="post">
-  <div class="form-inline form-group">
-    {{ form.first_name }}
-    <label for="name" class="ml-5 mr-2">{{ form.last_name.label }}</label>
-    {{ form.last_name }}
-  </div>
-  <div class="form-inline form-group">
-      <label for="name" class=" mr-2">{{ form.read_first_name.label }}</label>
+<div class="card my-3 mx-2 shadow-sm">
+  <form method="post" class="mx-3 my-3">
+    <div class="form-inline form-group">
+      <label for="first_name" class="col-sm-2">{{ form.first_name.label }}</label>
+          {{ form.first_name }}
+      
+      <label for="last_name" class="col-sm-2">{{ form.last_name.label }}</label>
+      {{ form.last_name }}
+    </div>
+    <div class="form-inline form-group">
+      <label for="read_first_name" class="col-sm-2">{{ form.read_first_name.label }}</label>
       {{ form.read_first_name }}
-      <label for="name" class="ml-5 mr-2">{{ form.read_last_name.label }}</label>
+      <label for="read_last_name" class="col-sm-2">{{ form.read_last_name.label }}</label>
       {{ form.read_last_name }}
-  </div>
-  <div class="form-group form-inline">
-      <label for="name" class="ml-5 mr-2">{{ form.birthday.label }}</label>
+    </div>
+    <div class="form-group form-inline">
+      <label for="birthday" class="col-sm-2">{{ form.birthday.label }}</label>
       {{ form.birthday }}
-  </div>
-  <div class="form-group">
-      <label for="name" class="ml-5 mr-2">{{ form.gender.label }}</label>
-      {{ form.gender }}
-  </div>
-  <div class="form-group">
-      <label for="name" class="ml-5 mr-2">{{ form.phone_number.label }}</label>
-      {{ form.phone_number }}
-  </div>
-  <div class="form-group">
-      <label for="name" class="ml-5 mr-2">{{ form.postal_code.label }}</label>
+    </div>
+    <div class="form-inline form-group">
+      <label for="gender" class="col-sm-2">{{ form.gender.label }}</label>
+      {% for radio_button in form.gender %}
+      <div class="mr-2">
+        {{ radio_button }}
+      </div>
+      {% endfor %}
+    </div>
+    <div class="form-group form-inline">
+      <label for="phone_number" class="col-sm-2">{{ form.phone_number.label }}</label>
+          {{ form.phone_number }}
+          {{ form.phone_number.help_text }}
+    </div>
+    <div class="form-group form-inline">
+      <label for="postal_code" class="col-sm-2">{{ form.postal_code.label }}</label>
       {{ form.postal_code }}
-  </div>
-  
-  <button type="submit" class="btn btn-info">登録</button>
-  {% csrf_token %}
-</form>
+      {{ form.postal_code.help_text }}
+    </div>
+
+    <button type="submit" class="btn btn-info">登録</button>
+    {% csrf_token %}
+  </form>
+</div>
 
 {% endblock %}

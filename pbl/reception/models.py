@@ -20,9 +20,9 @@ class JoinUser(models.Model):
   postal_code = models.CharField(validators = [postal_code_regex],verbose_name='郵便番号', max_length=7,help_text='※ハイフン無しで入力してください')
   street_address = models.CharField(verbose_name='住所', max_length=64)
   profession = models.PositiveSmallIntegerField(verbose_name='職業', help_text="1:学生,2:その他",default=1)
-  high_school_id = models.IntegerField(verbose_name='高校ID',max_length=4,blank=True,default=null)
-  school_year = models.IntegerField(verbose_name='学年',max_length=1,blank=True,default=null)
-  graduation_year = models.IntegerField(verbose_name='卒業年度',max_length=4,blank=True,default=null)
+  high_school_id = models.IntegerField(verbose_name='高校ID',max_length=4,blank=True,default=None)
+  school_year = models.IntegerField(verbose_name='学年',max_length=1,blank=True,default=None)
+  graduation_year = models.IntegerField(verbose_name='卒業年度',max_length=4,blank=True,default=None)
 
   
 
