@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import RegexValidator
 
 class JoinUser(models.Model):
   class Meta:
@@ -14,9 +15,9 @@ class JoinUser(models.Model):
   birthday = models.DateField(verbose_name='生年月日')
   gender = models.PositiveSmallIntegerField(verbose_name='性別',default=1,choices=GENDER_CHOICE)
   phone_number_regex = RegexValidator(regex=r'^[0-9]+$', message=("ハイフンなし電話番号が入力されていないときのエラーメッセージを入力"))
-  phone_number = models.CharField(validators = [phone_number_regex],verbose_name='電話番号(ハイフンなし)', max_length=11)
+  phone_number = models.CharField(validators = [phone_number_regex],verbose_name='電話番号', max_length=11,help_text='※ハイフン無しで入力してください')
   postal_code_regex = RegexValidator(regex=r'^[0-9]+$', message=("ハイフンなし郵便番号が入力されていない時のエラーメッセージ"))
-  postal_code = models.CharField(validators = [postal_code_regex],verbose_name='郵便番号(ハイフンなし)', max_length=7)
+  postal_code = models.CharField(validators = [postal_code_regex],verbose_name='郵便番号', max_length=7,help_text='※ハイフン無しで入力してください')
   street_address = models.CharField(verbose_name='住所', max_length=64)
   profession = models.PositiveSmallIntegerField(verbose_name='職業', help_text="1:学生,2:その他",default=1)
   high_school_id = models.IntegerField(verbose_name='高校ID',max_length=4,blank=True,default=null)
