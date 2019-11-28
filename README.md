@@ -21,7 +21,7 @@ PBLのプロジェクトです。現在は受付システムのみの実装を�
 
 Git cloneしたディレクトリでwindowsなら`py -m venv myvenv`でmyvenvというディレクトリが生成されます。
 
-そこで`myvenv¥Scripts¥activate.bat`で仮想環境に入れます。
+そこで、`cd myvenv/Scripts`でディレクトリを移動し、`activate.bat`で仮想環境に入れます。
 
 次にpipパッケージを同期します。pblディレクトリに入り`pip install -r requirements.txt`でインストールが始まります。
 
@@ -29,7 +29,9 @@ Git cloneしたディレクトリでwindowsなら`py -m venv myvenv`でmyvenvと
 
 最後にpblディレクトリの中のmanage.pyを実行します。
 
-`python manage.py runserver`でサーバーを起動し、ブラウザで`localhost:8000`にアクセスしてください。djangoの画面が表示されたら環境構築は正しくできています。
+仮想環境に入った状態で`python manage.py runserver`でサーバーを起動し、ブラウザで`localhost:8000/reception/[url.pyで指定したpath]`にアクセスしてください。
+
+一例として、`localhost:8000/reception/firstform/`にアクセスできれば、環境構築は正しくできています。
 
 
 
