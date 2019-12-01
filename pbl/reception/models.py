@@ -7,9 +7,9 @@ class JoinUser(models.Model):
     db_table = 'join_user'
     verbose_name_plural = "参加ユーザー"
 
-  GENDER_CHOICE = (('1','男性'), ('2','女性'))
-  PROFESSION_CHOICE = (('1','学生'), ('2','その他'))
-  SCHOOL_YEAR_CHOICE = (('1', '1年'), ('2', '2年'), ('3', '3年'), ('4', '4年'))
+  GENDER_CHOICE = ((1,'男性'), (2,'女性'))
+  PROFESSION_CHOICE = ((1,'学生'), (2,'その他'))
+  SCHOOL_YEAR_CHOICE = ((1, '1年'), (2, '2年'), (3, '3年'), (4, '4年'))
   GRADUATION_YEAR_CHOICES = []
   for r in range(datetime.datetime.now().year, (datetime.datetime.now().year + 11)):
     GRADUATION_YEAR_CHOICES.append((r,r))
@@ -20,10 +20,9 @@ class JoinUser(models.Model):
   read_first_name = models.CharField(verbose_name='名前(カナ)', max_length=32)
   birthday = models.DateField(verbose_name='生年月日')
   gender = models.PositiveSmallIntegerField(verbose_name='性別',default=1,choices=GENDER_CHOICE)
-  phone_number = models.CharField(verbose_name='電話番号', max_length=11,help_text='※ハイフン無しで入力してください')
-  postal_code = models.CharField(verbose_name='郵便番号', max_length=7,help_text='※ハイフン無しで入力してください')
+  phone_number = models.CharField(verbose_name='電話番号', max_length=11, help_text='※ハイフン無しで入力してください')
+  postal_code = models.CharField(verbose_name='郵便番号', max_length=7, help_text='※ハイフン無しで入力してください')
   street_address = models.CharField(verbose_name='住所', help_text='※郵便番号を入力することで市町村までが自動で入力されます',max_length=64)
-  address = models.CharField(verbose_name='番地',max_length=20)
   profession = models.PositiveSmallIntegerField(verbose_name='職業',default=1,choices=PROFESSION_CHOICE)
   high_school_name = models.CharField(verbose_name='高校名',blank=True, max_length=32, default=None)
   school_year = models.PositiveSmallIntegerField(verbose_name='学年', choices=SCHOOL_YEAR_CHOICE, default=None)

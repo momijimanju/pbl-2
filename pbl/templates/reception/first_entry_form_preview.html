@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static widget_tweaks %}
+{% block title %}初回登録画面{% endblock title %}
+{% block page_title %}参加者登録{% endblock page_title %}
+{% block main %}
+<a href="javascript:history.back()">[入力画面に戻る]</a>
+<table class="table">
+  {% for field in form %}
+  <tr>
+    <th>{{ field.label }}:</th>
+    <td>{{ field.data }}</td>
+  </tr>
+  {% endfor %}
+</table>
+<form action="" method="post">{% csrf_token %}
+  {% for field in form %}{{ field.as_hidden }}
+  {% endfor %}
+  <input type="hidden" name="{{ stage_field }}" value="2" />
+  <input type="hidden" name="{{ hash_field }}" value="{{ hash_value }}" />
+  <button type="submit" class="btn btn-success mt-5 mx-auto d-block col-sm-5">入力を確定する</button>
+</form>
+
+
+{% endblock %}

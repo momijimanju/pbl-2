@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'reception.apps.ReceptionConfig',
     'bootstrap4',
+    'formtools',
     'widget_tweaks',
 ]
 
