@@ -5,53 +5,125 @@
 {% block main %}
 <div class="card my-3 mx-2 shadow-sm">
   <form method="post" class="mx-3 my-3">
-    <div class="form-inline form-group">
-      <label for="first_name" class="col-sm-2">{{ form.first_name.label }}</label>
-          {{ form.first_name }}
-      
-      <label for="last_name" class="col-sm-2">{{ form.last_name.label }}</label>
-      {{ form.last_name }}
+    <div class="row form-group">
+      <div class="col">
+        <label for="first_name">{{ form.last_name.label }}</label>
+        {{ form.last_name }}
+      </div>
+      <div class="col">
+        <label for="last_name">{{ form.first_name.label }}</label>
+        {{ form.first_name }}
+      </div>
     </div>
-    <div class="form-inline form-group">
-      <label for="read_first_name" class="col-sm-2">{{ form.read_first_name.label }}</label>
-      {{ form.read_first_name }}
-      <label for="read_last_name" class="col-sm-2">{{ form.read_last_name.label }}</label>
-      {{ form.read_last_name }}
+    <div class="row form-group">
+      <div class="col">
+        <label for="first_name">{{ form.read_last_name.label }}</label>
+        {{ form.read_last_name }}
+      </div>
+      <div class="col">
+        <label for="last_name">{{ form.read_first_name.label }}</label>
+        {{ form.read_first_name }}
+      </div>
     </div>
-    <div class="form-group form-inline">
-      <label for="birthday" class="col-sm-2">{{ form.birthday.label }}</label>
-      {{ form.birthday }}
+    <div class="form-group">
+      <div class="">
+        <label for="birthday">{{ form.birthday.label }}</label>
+      </div>
+      <div class="form-inline">
+        {{ form.birthday }}
+      </div>
     </div>
-    <div class="form-inline form-group">
-      <label for="gender" class="col-sm-2">{{ form.gender.label }}</label>
+    <div class="form-group">
+      <label>{{ form.gender.label }}</label>
+      <div class="form-inline">
       {% for radio_button in form.gender %}
-      <div class="mr-2">
+      <div class="mr-4">
         {{ radio_button }}
       </div>
       {% endfor %}
     </div>
-    <div class="form-group form-inline">
-      <label for="phone_number" class="col-sm-2">{{ form.phone_number.label }}</label>
-          {{ form.phone_number }}
-          {{ form.phone_number.help_text }}
+  </div>
+    <div class="form-group">
+      <label for="phone_number">{{ form.phone_number.label }}</label>
+      {{ form.phone_number }}
+      {{ form.phone_number.help_text }}
     </div>
-    <div class="form-group form-inline">
-      <label for="postal_code" class="col-sm-2">{{ form.postal_code.label }}</label>
+    <div class="form-group">
+      <label for="postal_code">{{ form.postal_code.label }}</label>
       {{ form.postal_code }}
       {{ form.postal_code.help_text }}
     </div>
-    <div class="form-group form-inline">
-        <label for="street_address" class="col-sm-2">{{ form.street_address.label }}</label>
-        {{ form.street_address }}
+    <div class="form-group">
+      <label for="street_address">{{ form.street_address.label }}</label>
+      {{ form.street_address }}
+      {{ form.street_address.help_text }}
     </div>
-    <div class="form-group form-inline">
-        <label for="street_address" class="col-sm-2">{{ form.profession.label }}</label>
-        {{ form.profession }}
+    <div class="form-group">
+      <label for="street_address">{{ form.profession.label }}</label>
+      <div class="form-inline">
+      {% for radio_button in form.profession %}
+      <div class="mr-4">
+        {{ radio_button }}
+      </div>
+      {% endfor %}
     </div>
-
-    <button type="submit" class="btn btn-info">登録</button>
+    </div>
+    <div class="student_form">
+        <div class="form-group">
+            <label for="postal_code">{{ form.high_school_name.label }}</label>
+            {{ form.high_school_name }}
+          </div>
+      <div class="form-group">
+        <label for="school_year">{{ form.school_year.label }}</label>
+        <div class="col-sm-6">
+        {{ form.school_year }}
+      </div>
+      </div>
+      <div class="form-group">
+        <label for="graduate">{{ form.graduation_year.label }}</label>
+        <div class="col-sm-6">
+        {{ form.graduation_year }}
+      </div>
+      </div>
+    </div>
+    <div class="other_form">
+      <div class="form-group">
+        <label for="graduate">{{ form.graduate.label }}</label>
+        <div class="col-sm-6">
+        {{ form.graduate }}
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="certification">{{ form.certification.label }}</label>
+        <div class="col-sm-6">
+        {{ form.certification }}
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-success mt-5 mx-auto d-block col-sm-5">入力完了</button>
     {% csrf_token %}
-  </form>
+    <form>
 </div>
+
+
+<script>
+  $(function () {
+    // 学生とその他のフォームの表示切り替え
+    $(".other_form").hide();
+    $("input[name='profession']:radio").change(function () {
+      let radioval = $(this).val();
+      if (radioval == 1) {
+        // 学生の場合のフォーム
+        $(".other_form").hide();
+        $(".student_form").show();
+      } else if (radioval == 2) {
+        // 学生ではない場合のフォーム
+        $(".student_form").hide();
+        $(".other_form").show();
+      }
+
+    });
+  });
+</script>
 
 {% endblock %}
