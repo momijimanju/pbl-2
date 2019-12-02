@@ -117,16 +117,28 @@
   $(function () {
     // 学生とその他のフォームの表示切り替え
     $(".other_form").hide();
+    $('#formtools_graduate').prop('disabled', true);
+    $('#formtools_certification').prop('disabled', true);
     $("input[name='profession']:radio").change(function () {
       let radioval = $(this).val();
       if (radioval == 1) {
         // 学生の場合のフォーム
         $(".other_form").hide();
         $(".student_form").show();
+        $('#formtools_graduate').prop('disabled', true);
+        $('#formtools_certification').prop('disabled', true);
+        $('#formtools_high_school_name').prop('disabled', false);
+        $('#formtools_school_year').prop('disabled', false);
+        $('#formtools_graduation_year').prop('disabled', false);
       } else if (radioval == 2) {
         // 学生ではない場合のフォーム
         $(".student_form").hide();
         $(".other_form").show();
+        $('#formtools_high_school_name').prop('disabled', true);
+        $('#formtools_school_year').prop('disabled', true);
+        $('#formtools_graduation_year').prop('disabled', true);
+        $('#formtools_graduate').prop('disabled', false);
+        $('#formtools_certification').prop('disabled', false);
       }
 
     });
