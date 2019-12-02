@@ -13,4 +13,4 @@ class Department(models.Model):
   created = models.DateTimeField(default=datetime.datetime.now, verbose_name='作成日')
 
   def __str__(self):
-    return self.last_name + self.first_name
+    return self.name

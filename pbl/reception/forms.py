@@ -9,7 +9,7 @@ class FirstEntryForm(forms.ModelForm):
     fields = ('first_name', 'last_name','read_first_name', 'read_last_name',
                'birthday', 'gender', 'phone_number', 'postal_code', 'street_address', 
                'profession', 'school_year', 'graduation_year', 'graduate', 'certification',
-               'high_school_name',
+               'high_school_name', 'department',
     )
     
     widgets = {
@@ -38,7 +38,7 @@ class FirstEntryForm(forms.ModelForm):
       'first_name': '一馬',
       'read_last_name': 'ニノミヤ',
       'read_first_name': 'カズマ',
-      'phone_number': '08021443357',
+      'phone_number': self.fields['phone_number'].help_text
     }
 
     self.fields['last_name'].widget.attrs['placeholder'] = PLACE_HOLDER['last_name']
