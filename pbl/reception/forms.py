@@ -3,7 +3,7 @@ from .models import JoinUser
 import datetime
 
 # 初回参加者入力画面のフォーム
-class FirstEntryFrom(forms.ModelForm):
+class FirstEntryForm(forms.ModelForm):
   class Meta:
     model = JoinUser
     fields = ('first_name', 'last_name','read_first_name', 'read_last_name',

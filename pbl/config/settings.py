@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'reception.apps.ReceptionConfig',
+    'management.apps.ManagementConfig',
     'bootstrap4',
     'formtools',
     'widget_tweaks',

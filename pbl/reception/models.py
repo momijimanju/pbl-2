@@ -5,7 +5,7 @@ import datetime
 class JoinUser(models.Model):
   class Meta:
     db_table = 'join_user'
-    verbose_name_plural = "参加ユーザー"
+    verbose_name_plural = '参加ユーザー'
 
   GENDER_CHOICE = ((1,'男性'), (2,'女性'))
   PROFESSION_CHOICE = ((1,'学生'), (2,'その他'))
