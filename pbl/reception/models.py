@@ -30,7 +30,7 @@ class JoinUser(models.Model):
   postal_code = models.CharField(verbose_name='郵便番号', max_length=7, help_text='ハイフン無しで入力してください')
   street_address = models.CharField(verbose_name='住所', help_text='郵便番号を入力することで市町村までが自動で入力されます',max_length=64)
   profession = models.PositiveSmallIntegerField(verbose_name='職業',default=1,choices=PROFESSION_CHOICE)
-  high_school_name = models.CharField(verbose_name='高校名',blank=True, max_length=32, default=None)
+  high_school_name = models.CharField(verbose_name='高校名',blank=True, null=True, max_length=32)
   school_year = models.PositiveSmallIntegerField(verbose_name='学年', choices=SCHOOL_YEAR_CHOICE, default=None)
   graduation_year = models.IntegerField(verbose_name='卒業予定年',choices=GRADUATION_YEAR_CHOICES, default=None)
   graduate = models.NullBooleanField(verbose_name='高校卒業済み',blank=True, default=None)
@@ -38,7 +38,7 @@ class JoinUser(models.Model):
   # transportation_count = models.PositiveSmallIntegerField(verbose_name='交通費支給残回数')
   # join_count = models.IntegerField(verbose_name='参加回数')
   # examinee_join_count =models.IntegerField(verbose_name='受験対象年度参加回数')
-  department = models.PositiveSmallIntegerField(verbose_name='参加希望学科', choices=DEPARTMENT_CHOICE, default=None)
+  department = models.PositiveSmallIntegerField(verbose_name='参加希望学科', choices=DEPARTMENT_CHOICE, default=1)
   created = models.DateTimeField(default=datetime.datetime.now, verbose_name="作成日")
 
 
