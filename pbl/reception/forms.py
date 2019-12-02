@@ -32,3 +32,19 @@ class FirstEntryFrom(forms.ModelForm):
     # self.fields['street_address'].widget.attrs['readonly'] = True
     for field in self.fields.values():
       field.widget.attrs['class'] = 'form-control'
+
+    PLACE_HOLDER = {
+      'last_name': '二宮',
+      'first_name': '一馬',
+      'read_last_name': 'ニノミヤ',
+      'read_first_name': 'カズマ',
+      'phone_number': '08021443357',
+    }
+
+    self.fields['last_name'].widget.attrs['placeholder'] = PLACE_HOLDER['last_name']
+    self.fields['first_name'].widget.attrs['placeholder'] = PLACE_HOLDER['first_name']
+    self.fields['read_last_name'].widget.attrs['placeholder'] = PLACE_HOLDER['read_last_name']
+    self.fields['read_first_name'].widget.attrs['placeholder'] = PLACE_HOLDER['read_first_name']
+    self.fields['phone_number'].widget.attrs['placeholder'] = PLACE_HOLDER['phone_number']
+
+

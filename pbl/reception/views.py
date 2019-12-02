@@ -19,6 +19,7 @@ from .models import JoinUser
   
 # first_entry_form = FirstEntryFormView.as_view()
 
+# フォームと確認画面
 class FirstEntryFormPreview(FormPreview):
   preview_template = 'reception/first_entry_form_preview.html'
   form_template = 'reception/first_entry_form.html'
@@ -33,6 +34,7 @@ class FirstEntryFormPreview(FormPreview):
 
 first_entry_form_preview = FirstEntryFormPreview(FirstEntryFrom)
 
+# テスト用登録完了画面
 class TestSuccess(TemplateView):
   template_name = 'reception/test_success.html'
 

@@ -51,7 +51,9 @@
       {{ form.postal_code }}
       {{ form.postal_code.help_text }}
       {% if form.postal_code.errors %}
-      <p>{{ form.postal_code.errors.0 }}</p>
+      <div class="alert alert-danger" role="alert">
+          {{ form.postal_code.errors.0 }}
+      </div>
       {% endif %}
     </div>
     <div class="form-group">
