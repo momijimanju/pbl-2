@@ -197,25 +197,25 @@
         // 学生の場合のフォーム
         $(".other_form").hide();
         $(".student_form").show();
-        $(".student_form").find("input").prop("disabled", false);
-        $(".other_form").find("input").prop("disabled", true);
+        // $(".student_form").find("input").prop("disabled", false);
+        // $(".other_form").find("input").prop("disabled", true);
 
-        // $('#formtools_graduate').prop('disabled', true);
-        // $('#formtools_certification').prop('disabled', true);
-        // $('#formtools_high_school_name').prop('disabled', false);
-        // $('#formtools_school_year').prop('disabled', false);
-        // $('#formtools_graduation_year').prop('disabled', false);
+        $('#formtools_graduate').prop('disabled', true);
+        $('#formtools_certification').prop('disabled', true);
+        $('#formtools_high_school_name').prop('disabled', false);
+        $('#formtools_school_year').prop('disabled', false);
+        $('#formtools_graduation_year').prop('disabled', false);
       } else if (radio_val == 2) {
         // 学生ではない場合のフォーム
         $(".student_form").hide();
         $(".other_form").show();
-        $(".student_form").find("input").prop("disabled", true);
-        $(".other_form").find("input").prop("disabled", false);
-        // $('#formtools_high_school_name').prop('disabled', true);
-        // $('#formtools_school_year').prop('disabled', true);
-        // $('#formtools_graduation_year').prop('disabled', true);
-        // $('#formtools_graduate').prop('disabled', false);
-        // $('#formtools_certification').prop('disabled', false);
+        // $(".student_form").find("input").prop("disabled", true);
+        // $(".other_form").find("input").prop("disabled", false);
+        $('#formtools_high_school_name').prop('disabled', true);
+        $('#formtools_school_year').prop('disabled', true);
+        $('#formtools_graduation_year').prop('disabled', true);
+        $('#formtools_graduate').prop('disabled', false);
+        $('#formtools_certification').prop('disabled', false);
       }
 
     }
