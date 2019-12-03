@@ -9,20 +9,40 @@
       <div class="col">
         <label for="first_name">{{ form.last_name.label }}</label>
         {{ form.last_name }}
+        {% if form.last_name.errors %}
+        <div class="alert alert-danger" role="alert">
+          {{ form.last_name.errors.0 }}
+        </div>
+        {% endif %}
       </div>
       <div class="col">
         <label for="last_name">{{ form.first_name.label }}</label>
         {{ form.first_name }}
+        {% if form.first_name.errors %}
+        <div class="alert alert-danger" role="alert">
+          {{ form.first_name.errors.0 }}
+        </div>
+        {% endif %}
       </div>
     </div>
     <div class="row form-group">
       <div class="col">
         <label for="first_name">{{ form.read_last_name.label }}</label>
         {{ form.read_last_name }}
+        {% if form.read_last_name.errors %}
+        <div class="alert alert-danger" role="alert">
+          {{ form.read_last_name.errors.0 }}
+        </div>
+        {% endif %}
       </div>
       <div class="col">
         <label for="last_name">{{ form.read_first_name.label }}</label>
         {{ form.read_first_name }}
+        {% if form.read_first_name.errors %}
+        <div class="alert alert-danger" role="alert">
+          {{ form.read_first_name.errors.0 }}
+        </div>
+        {% endif %}
       </div>
     </div>
     <div class="form-group">
@@ -39,12 +59,22 @@
           {{ radio_button }}
         </div>
         {% endfor %}
+        {% if form.gender.errors %}
+        <div class="alert alert-danger" role="alert">
+          {{ form.gender.errors.0 }}
+        </div>
+        {% endif %}
       </div>
     </div>
     <div class="form-group">
       <label for="phone_number">{{ form.phone_number.label }}</label>
       {{ form.phone_number }}
       {{ form.phone_number.help_text }}
+      {% if form.phone_number.errors %}
+      <div class="alert alert-danger" role="alert">
+        {{ form.phone_number.errors.0 }}
+      </div>
+      {% endif %}
     </div>
     <div class="form-group">
       <label for="postal_code">{{ form.postal_code.label }}</label>
@@ -52,7 +82,7 @@
       {{ form.postal_code.help_text }}
       {% if form.postal_code.errors %}
       <div class="alert alert-danger" role="alert">
-          {{ form.postal_code.errors.0 }}
+        {{ form.postal_code.errors.0 }}
       </div>
       {% endif %}
     </div>
@@ -60,6 +90,11 @@
       <label for="street_address">{{ form.street_address.label }}</label>
       {{ form.street_address }}
       {{ form.street_address.help_text }}
+      {% if form.street_address.errors %}
+      <div class="alert alert-danger" role="alert">
+        {{ form.street_address.errors.0 }}
+      </div>
+      {% endif %}
     </div>
     <div class="form-group">
       <label for="street_address">{{ form.profession.label }}</label>
@@ -69,23 +104,43 @@
           {{ radio_button }}
         </div>
         {% endfor %}
+        {% if form.profession.errors %}
+        <div class="alert alert-danger" role="alert">
+          {{ form.profession.errors.0 }}
+        </div>
+        {% endif %}
       </div>
     </div>
     <div class="student_form">
       <div class="form-group">
         <label for="postal_code">{{ form.high_school_name.label }}</label>
         {{ form.high_school_name }}
+        {% if form.high_school_name.errors %}
+        <div class="alert alert-danger" role="alert">
+          {{ form.high_school_name.errors.0 }}
+        </div>
+        {% endif %}
       </div>
       <div class="form-group">
         <label for="school_year">{{ form.school_year.label }}</label>
         <div class="col-sm-6">
           {{ form.school_year }}
+          {% if form.school_year.errors %}
+          <div class="alert alert-danger" role="alert">
+            {{ form.school_year.errors.0 }}
+          </div>
+          {% endif %}
         </div>
       </div>
       <div class="form-group">
         <label for="graduate">{{ form.graduation_year.label }}</label>
         <div class="col-sm-6">
           {{ form.graduation_year }}
+          {% if form.graduation_year.errors %}
+          <div class="alert alert-danger" role="alert">
+            {{ form.graduation_year.errors.0 }}
+          </div>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -94,21 +149,36 @@
         <label for="graduate">{{ form.graduate.label }}</label>
         <div class="col-sm-6">
           {{ form.graduate }}
+          {% if form.graduate.errors %}
+          <div class="alert alert-danger" role="alert">
+            {{ form.graduate.errors.0 }}
+          </div>
+          {% endif %}
         </div>
       </div>
       <div class="form-group">
         <label for="certification">{{ form.certification.label }}</label>
         <div class="col-sm-6">
           {{ form.certification }}
+          {% if form.certification.errors %}
+          <div class="alert alert-danger" role="alert">
+            {{ form.certification.errors.0 }}
+          </div>
+          {% endif %}
         </div>
       </div>
     </div>
     <div class="form-group">
-        <label for="department">{{ form.department.label }}</label>
-        <div class="col-sm-6">
-          {{ form.department }}
+      <label for="department">{{ form.department.label }}</label>
+      <div class="col-sm-6">
+        {{ form.department }}
+        {% if form.department.errors %}
+        <div class="alert alert-danger" role="alert">
+          {{ form.department.errors.0 }}
         </div>
+        {% endif %}
       </div>
+    </div>
     {% if form.errors %}
     {{ form.non_field_errors }}
     {% endif %}
@@ -121,31 +191,41 @@
 {% block js %}
 <script>
   $(function () {
-    // 学生とその他のフォームの表示切り替え
-    $(".other_form").hide();
-    $('#formtools_graduate').prop('disabled', true);
-    $('#formtools_certification').prop('disabled', true);
-    $("input[name='profession']:radio").change(function () {
-      let radioval = $(this).val();
-      if (radioval == 1) {
+    const change_form = radio_val => {
+      console.log('test')
+      if (radio_val == 1) {
         // 学生の場合のフォーム
         $(".other_form").hide();
         $(".student_form").show();
-        $('#formtools_graduate').prop('disabled', true);
-        $('#formtools_certification').prop('disabled', true);
-        $('#formtools_high_school_name').prop('disabled', false);
-        $('#formtools_school_year').prop('disabled', false);
-        $('#formtools_graduation_year').prop('disabled', false);
-      } else if (radioval == 2) {
+        $(".student_form").find("input").prop("disabled", false);
+        $(".other_form").find("input").prop("disabled", true);
+
+        // $('#formtools_graduate').prop('disabled', true);
+        // $('#formtools_certification').prop('disabled', true);
+        // $('#formtools_high_school_name').prop('disabled', false);
+        // $('#formtools_school_year').prop('disabled', false);
+        // $('#formtools_graduation_year').prop('disabled', false);
+      } else if (radio_val == 2) {
         // 学生ではない場合のフォーム
         $(".student_form").hide();
         $(".other_form").show();
-        $('#formtools_high_school_name').prop('disabled', true);
-        $('#formtools_school_year').prop('disabled', true);
-        $('#formtools_graduation_year').prop('disabled', true);
-        $('#formtools_graduate').prop('disabled', false);
-        $('#formtools_certification').prop('disabled', false);
+        $(".student_form").find("input").prop("disabled", true);
+        $(".other_form").find("input").prop("disabled", false);
+        // $('#formtools_high_school_name').prop('disabled', true);
+        // $('#formtools_school_year').prop('disabled', true);
+        // $('#formtools_graduation_year').prop('disabled', true);
+        // $('#formtools_graduate').prop('disabled', false);
+        // $('#formtools_certification').prop('disabled', false);
       }
+
+    }
+
+    // ロード時の初期表示を設定
+    change_form($("input[name='profession']:radio:checked").val())
+
+    $("input[name='profession']:radio").change(function () {
+      let profession_val = $(this).val();
+      change_form(profession_val)
     });
   });
 </script>
