@@ -53,31 +53,34 @@
         {% endif %}
     </td>
   </tr>
-  <tr>
-    <th>{{ form.school_year.label }}:</th>
-    <td>{{ form.school_year.data }}年</td>
-  </tr>
-  <tr>
-    <th>{{ form.graduation_year.label }}:</th>
-    <td>{{ form.graduation_year.data }}年</td>
-  </tr>
-  <tr>
-    <th>{{ form.graduate.label }}:</th>
-    <td>{% if form.profession.data == "2" and form.graduate.data %}はい
-        {% else %}いいえ
-        {% endif %}
-    </td>
-  </tr>
-  <tr>
-    <th>{{ form.certification.label }}:</th>
-    <td>{% if form.profession.data == "2" and form.certification.data %}はい
-        {% else %}いいえ
-        {% endif %}</td>
-  </tr>
-  <tr>
-    <th>{{ form.high_school_name.label }}:</th>
-    <td>{{ form.high_school_name.data }}高校</td>
-  </tr>
+  {% if form.profession.data == "1" %}
+    <tr>
+      <th>{{ form.school_year.label }}:</th>
+      <td>{{ form.school_year.data }}年</td>
+    </tr>
+    <tr>
+      <th>{{ form.graduation_year.label }}:</th>
+      <td>{{ form.graduation_year.data }}年</td>
+    </tr>
+    <tr>
+      <th>{{ form.high_school_name.label }}:</th>
+      <td>{{ form.high_school_name.data }}高校</td>
+    </tr>
+  {% else %}
+    <tr>
+      <th>{{ form.graduate.label }}:</th>
+      <td>{% if form.profession.data == "2" and form.graduate.data %}はい
+          {% else %}いいえ
+          {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <th>{{ form.certification.label }}:</th>
+      <td>{% if form.profession.data == "2" and form.certification.data %}はい
+          {% else %}いいえ
+          {% endif %}</td>
+    </tr>
+  {% endif %}
   <tr>
     <th>{{ form.department.label }}:</th>
     <td>{% if form.department.data == "1" %}医療福祉事務学科
