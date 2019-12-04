@@ -119,6 +119,7 @@
     $(".other_form").hide();
     $('#formtools_graduate').prop('disabled', true);
     $('#formtools_certification').prop('disabled', true);
+    $('#formtools_high_school_name').prop('required',true);
     $("input[name='profession']:radio").change(function () {
       let radioval = $(this).val();
       if (radioval == 1) {
@@ -130,6 +131,7 @@
         $('#formtools_high_school_name').prop('disabled', false);
         $('#formtools_school_year').prop('disabled', false);
         $('#formtools_graduation_year').prop('disabled', false);
+        $('#formtools_high_school_name').prop('required',true);
       } else if (radioval == 2) {
         // 学生ではない場合のフォーム
         $(".student_form").hide();
