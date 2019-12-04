@@ -6,12 +6,94 @@
 <a href="javascript:history.back()">[入力画面に戻る]</a>
 <div class="card my-3 mx-2 shadow-sm">
 <table class="table">
-  {% for field in form %}
+  
   <tr>
-    <th>{{ field.label }}:</th>
-    <td>{{ field.data }}</td>
+    <th>{{ form.last_name.label }}:</th>
+    <td>{{ form.last_name.data }}</td>
   </tr>
-  {% endfor %}
+  <tr>
+    <th>{{ form.first_name.label }}:</th>
+    <td>{{ form.first_name.data }}</td>
+  </tr>
+  <tr>
+    <th>{{ form.read_last_name.label }}:</th>
+    <td>{{ form.read_last_name.data }}</td>
+  </tr>
+  <tr>
+    <th>{{ form.read_first_name.label }}:</th>
+    <td>{{ form.read_first_name.data }}</td>
+  </tr>
+  <tr>
+    <th>{{ form.birthday.label }}:</th>
+    <td>{{ form.birthday.data }}</td>
+  </tr>
+  <tr>
+    <th>{{ form.gender.label }}:</th>
+    <td>{% if form.gender.data == "1" %}男性
+        {% else %}女性
+        {% endif %}
+    </td>
+  </tr>
+  <tr>
+    <th>{{ form.phone_number.label }}:</th>
+    <td>{{ form.phone_number.data }}</td>
+  </tr>
+  <tr>
+    <th>{{ form.postal_code.label }}:</th>
+    <td>{{ form.postal_code.data }}</td>
+  </tr>
+  <tr>
+    <th>{{ form.street_address.label }}:</th>
+    <td>{{ form.street_address.data }}</td>
+  </tr>
+  <tr>
+    <th>{{ form.profession.label }}:</th>
+    <td>{% if form.profession.data == "1" %}学生
+        {% else %}その他
+        {% endif %}
+    </td>
+  </tr>
+  <tr>
+    <th>{{ form.school_year.label }}:</th>
+    <td>{{ form.school_year.data }}年</td>
+  </tr>
+  <tr>
+    <th>{{ form.graduation_year.label }}:</th>
+    <td>{{ form.graduation_year.data }}年</td>
+  </tr>
+  <tr>
+    <th>{{ form.graduate.label }}:</th>
+    <td>{% if form.profession.data == "2" and form.graduate.data %}はい
+        {% else %}いいえ
+        {% endif %}
+    </td>
+  </tr>
+  <tr>
+    <th>{{ form.certification.label }}:</th>
+    <td>{% if form.profession.data == "2" and form.certification.data %}はい
+        {% else %}いいえ
+        {% endif %}</td>
+  </tr>
+  <tr>
+    <th>{{ form.high_school_name.label }}:</th>
+    <td>{{ form.high_school_name.data }}高校</td>
+  </tr>
+  <tr>
+    <th>{{ form.department.label }}:</th>
+    <td>{% if form.department.data == "1" %}医療福祉事務学科
+      {% elif form.department.data == "2" %}診療情報管理士学科
+      {% elif form.department.data == "3" %}ホテル・ブライダル学科
+      {% elif form.department.data == "4" %}経営アシスト学科
+      {% elif form.department.data == "5" %}公務員・公務員速修学科
+      {% elif form.department.data == "6" %}保育学科
+      {% elif form.department.data == "7" %}情報スペシャリスト学科
+      {% elif form.department.data == "8" %}情報システム学科
+      {% elif form.department.data == "9" %}ゲームクリエイター・ゲームプログラマー学科
+      {% elif form.department.data == "10" %}データマーケター学科
+      {% elif form.department.data == "11" %}ネット・動画クリエイター学科
+      {% elif form.department.data == "12" %}CGデザイン学科
+      {% endif %}</td>
+  </tr>
 </table>
 </div>
 <form action="" method="post">{% csrf_token %}
@@ -21,6 +103,5 @@
   <input type="hidden" name="{{ hash_field }}" value="{{ hash_value }}" />
   <button type="submit" class="btn btn-success mt-5 mx-auto d-block col-sm-5">入力を確定する</button>
 </form>
-
 
 {% endblock %}
