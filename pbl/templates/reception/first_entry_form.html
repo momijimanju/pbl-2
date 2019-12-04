@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% load static widget_tweaks %}
+{% block title %}初回登録画面{% endblock title %}
+{% block page_title %}参加者登録{% endblock page_title %}
+{% block main %}
+<div class="card my-3 mx-2 shadow-sm">
+  <form action="" method="post" class="mx-3 my-3" enctype="multipart/form-data">
+    <div class="row form-group">
+      <div class="col">
+        <label for="first_name">{{ form.last_name.label }}</label>
+        {{ form.last_name }}
+      </div>
+      <div class="col">
+        <label for="last_name">{{ form.first_name.label }}</label>
+        {{ form.first_name }}
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col">
+        <label for="first_name">{{ form.read_last_name.label }}</label>
+        {{ form.read_last_name }}
+      </div>
+      <div class="col">
+        <label for="last_name">{{ form.read_first_name.label }}</label>
+        {{ form.read_first_name }}
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="birthday">{{ form.birthday.label }}</label>
+      <div class="form-inline">
+        {{ form.birthday }}
+      </div>
+    </div>
+    <div class="form-group">
+      <label>{{ form.gender.label }}</label>
+      <div class="form-inline">
+        {% for radio_button in form.gender %}
+        <div class="mr-4">
+          {{ radio_button }}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="phone_number">{{ form.phone_number.label }}</label>
+      {{ form.phone_number }}
+      {{ form.phone_number.help_text }}
+    </div>
+    <div class="form-group">
+      <label for="postal_code">{{ form.postal_code.label }}</label>
+      {{ form.postal_code }}
+      {{ form.postal_code.help_text }}
+      {% if form.postal_code.errors %}
+      <div class="alert alert-danger" role="alert">
+          {{ form.postal_code.errors.0 }}
+      </div>
+      {% endif %}
+    </div>
+    <div class="form-group">
+      <label for="street_address">{{ form.street_address.label }}</label>
+      {{ form.street_address }}
+      {{ form.street_address.help_text }}
+    </div>
+    <div class="form-group">
+      <label for="street_address">{{ form.profession.label }}</label>
+      <div class="form-inline">
+        {% for radio_button in form.profession %}
+        <div class="mr-4">
+          {{ radio_button }}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="student_form">
+      <div class="form-group">
+        <label for="postal_code">{{ form.high_school_name.label }}</label>
+        {{ form.high_school_name }}
+      </div>
+      <div class="form-group">
+        <label for="school_year">{{ form.school_year.label }}</label>
+        <div class="col-sm-6">
+          {{ form.school_year }}
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="graduate">{{ form.graduation_year.label }}</label>
+        <div class="col-sm-6">
+          {{ form.graduation_year }}
+        </div>
+      </div>
+    </div>
+    <div class="other_form">
+      <div class="form-group">
+        <label for="graduate">{{ form.graduate.label }}</label>
+        <div class="col-sm-6">
+          {{ form.graduate }}
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="certification">{{ form.certification.label }}</label>
+        <div class="col-sm-6">
+          {{ form.certification }}
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+        <label for="department">{{ form.department.label }}</label>
+        <div class="col-sm-6">
+          {{ form.department }}
+        </div>
+      </div>
+    {% if form.errors %}
+    {{ form.non_field_errors }}
+    {% endif %}
+    <button type="submit" class="btn btn-success mt-5 mx-auto d-block col-sm-5">入力内容の確認に進む</button>
+    {% csrf_token %}
+  </form>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+  $(function () {
+    // 学生とその他のフォームの表示切り替え
+    $(".other_form").hide();
+    $("input[name='profession']:radio").change(function () {
+      let radioval = $(this).val();
+      if (radioval == 1) {
+        // 学生の場合のフォーム
+        $(".other_form").hide();
+        $(".student_form").show();
+      } else if (radioval == 2) {
+        // 学生ではない場合のフォーム
+        $(".student_form").hide();
+        $(".other_form").show();
+      }
+    });
+  });
+</script>
+{% endblock %}
