@@ -6,6 +6,14 @@ from formtools.preview import FormPreview
 from django.urls import reverse_lazy
 from .forms import FirstEntryForm
 from .models import JoinUser
+from logging import getLogger, basicConfig, INFO
+
+# ログ
+logger = getLogger(__name__)
+basicConfig(level=INFO)
+
+logger.info('テスト')
+
 
 # # 初回参加確認画面
 # class firstJoinView():
