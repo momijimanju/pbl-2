@@ -25,13 +25,27 @@ class FirstEntryForm(forms.ModelForm):
             'profession': forms.RadioSelect,
     }
 
+  def clean_last_name(self):
+    last_name = self.cleaned_data['last_name']
+    if last_name is None:
+      raise forms.ValidationError('このフィールドを入力してください')
+    return last_name
+  def clean_first_name(self):
+    first_name = self.cleaned_data['first_name']
+    if first_name is None:
+      raise forms.ValidationError('このフィールドを入力してください')
+    return first_name
   def clean_read_last_name(self):
     read_last_name = self.cleaned_data['read_last_name']
+    if read_last_name is None:
+      raise forms.ValidationError('このフィールドを入力してください')
     if KATAKANA_RE.match(r'{}'.format(read_last_name)) is None:
       raise forms.ValidationError('カタカナで入力してください')
     return read_last_name
   def clean_read_first_name(self):
     read_first_name = self.cleaned_data['read_first_name']
+    if read_first_name is None:
+      raise forms.ValidationError('このフィールドを入力してください')
     if KATAKANA_RE.match(r'{}'.format(read_first_name)) is None:
       raise forms.ValidationError('カタカナで入力してください')
     return read_first_name
