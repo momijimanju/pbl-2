@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static widget_tweaks %}
-{% block title %}初回登録画面{% endblock title %}
-{% block page_title %}参加者登録{% endblock page_title %}
+{% block title %}２回目以降登録画面{% endblock title %}
+{% block page_title %}２回目以降参加者登録{% endblock page_title %}
 {% block main %}
 <div class="card border-info my-3 mx-2 shadow-sm">
   <form action="" method="post" class="mx-3 my-3" enctype="multipart/form-data">
@@ -47,23 +47,8 @@
     </div>
     <div class="form-group">
       <label for="birthday">{{ form.birthday.label }}</label>
-      <div class="row birthday_select">
-          {{ form.birthday }}
-      </div>
-    </div>
-    <div class="form-group">
-      <label>{{ form.gender.label }}</label>
       <div class="form-inline">
-        {% for radio_button in form.gender %}
-        <div class="mr-4">
-          {{ radio_button }}
-        </div>
-        {% endfor %}
-        {% if form.gender.errors %}
-        <div class="alert alert-danger" role="alert">
-          {{ form.gender.errors.0 }}
-        </div>
-        {% endif %}
+        {{ form.birthday }}
       </div>
     </div>
     <div class="form-group">
@@ -85,87 +70,6 @@
       {% endif %}
     </div>
     <div class="form-group">
-      <label for="street_address">{{ form.street_address.label }}</label>
-      {{ form.street_address }}
-      {% if form.street_address.errors %}
-      <div class="alert alert-danger" role="alert">
-        {{ form.street_address.errors.0 }}
-      </div>
-      {% endif %}
-    </div>
-    <div class="form-group">
-      <label for="street_address">{{ form.profession.label }}</label>
-      <div class="form-inline">
-        {% for radio_button in form.profession %}
-        <div class="mr-4">
-          {{ radio_button }}
-        </div>
-        {% endfor %}
-        {% if form.profession.errors %}
-        <div class="alert alert-danger" role="alert">
-          {{ form.profession.errors.0 }}
-        </div>
-        {% endif %}
-      </div>
-    </div>
-    <div class="student_form">
-      <div class="form-group">
-        <label for="postal_code">{{ form.high_school_name.label }}</label>
-        {{ form.high_school_name }}
-        {% if form.high_school_name.errors %}
-        <div class="alert alert-danger" role="alert">
-          {{ form.high_school_name.errors.0 }}
-        </div>
-        {% endif %}
-      </div>
-      <div class="form-group">
-        <label for="school_year">{{ form.school_year.label }}</label>
-        <div class="col-sm-6">
-          {{ form.school_year }}
-          {% if form.school_year.errors %}
-          <div class="alert alert-danger" role="alert">
-            {{ form.school_year.errors.0 }}
-          </div>
-          {% endif %}
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="graduate">{{ form.graduation_year.label }}</label>
-        <div class="col-sm-6">
-          {{ form.graduation_year }}
-          {% if form.graduation_year.errors %}
-          <div class="alert alert-danger" role="alert">
-            {{ form.graduation_year.errors.0 }}
-          </div>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-    <div class="other_form">
-      <div class="form-group">
-        <label for="graduate">{{ form.graduate.label }}</label>
-        <div class="col-sm-6">
-          {{ form.graduate }}
-          {% if form.graduate.errors %}
-          <div class="alert alert-danger" role="alert">
-            {{ form.graduate.errors.0 }}
-          </div>
-          {% endif %}
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="certification">{{ form.certification.label }}</label>
-        <div class="col-sm-6">
-          {{ form.certification }}
-          {% if form.certification.errors %}
-          <div class="alert alert-danger" role="alert">
-            {{ form.certification.errors.0 }}
-          </div>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-    <div class="form-group">
       <label for="department">{{ form.department.label }}</label>
       <div class="col-sm-6">
         {{ form.department }}
@@ -179,7 +83,7 @@
     {% if form.errors %}
     {{ form.non_field_errors }}
     {% endif %}
-    <button type="submit" class="btn btn-success mt-5 mx-auto d-block col-sm-5" id="unko">入力内容の確認に進む</button>
+    <button type="submit" class="btn btn-info mt-5 mx-auto d-block col-sm-5">入力内容の確認に進む</button>
     {% csrf_token %}
   </form>
 </div>
@@ -190,9 +94,6 @@
   $(function () {
     const change_form = radio_val => {
       console.log('test')
-      $('#myunko').on('submit', function () {
-        $('#unko').prop('disabled', true);
-      });
       if (radio_val == 1) {
         // 学生の場合のフォーム
         $(".other_form").hide();
@@ -205,7 +106,7 @@
         $('#formtools_high_school_name').prop('disabled', false);
         $('#formtools_school_year').prop('disabled', false);
         $('#formtools_graduation_year').prop('disabled', false);
-        $('#formtools_high_school_name').prop('required', true);
+        $('#formtools_high_school_name').prop('required',true);
       } else if (radio_val == 2) {
         // 学生ではない場合のフォーム
         $(".student_form").hide();
@@ -224,7 +125,6 @@
     // ロード時の初期表示を設定
     change_form($("input[name='profession']:radio:checked").val())
 
-    $(".birthday_select").find("select").addClass('col mx-3');
     $("input[name='profession']:radio").change(function () {
       let profession_val = $(this).val();
       change_form(profession_val)
@@ -233,14 +133,11 @@
 </script>
 <!-- 青い枠を消して、ラジオボタンを救いたい。 -->
 <style>
-  textarea:focus,
-  input:focus,
-  input[type]:focus,
-  .uneditable-input:focus {
-    outline: 0;
-    box-shadow: none;
-    border: 2px solid skyblue;
-    background-color: #ffffff;
-  }
+  textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus {
+  outline: 0;
+  box-shadow: none;
+  border: 2px solid skyblue;
+  background-color: #ffffff;
+}
 </style>
 {% endblock %}

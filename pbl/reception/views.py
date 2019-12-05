@@ -4,7 +4,7 @@ from django.views.generic import View, TemplateView, FormView
 from django.http import HttpResponse, HttpResponseRedirect
 from formtools.preview import FormPreview
 from django.urls import reverse_lazy
-from .forms import FirstEntryForm
+from .forms import FirstEntryForm, SecondEntryForm
 from .models import JoinUser
 
 
@@ -45,11 +45,36 @@ test_success = TestSuccess.as_view()
 # class firstFormDetailView():
 #   pass
 # # 参加表入力(2回目)画面
-# class secondFormView():
-#   pass
+class SecondFormPreview(FormPreview):
+  preview_template = 'reception/second_entry_form_preview.html'
+  form_template = 'reception/second_entry_form.html'
+  def done(self, request, cleaned_data):
+    form = SecondEntryForm(request.POST)
+
+    user = None
+    # データベースの内容と一致するかどうか
+    try:
+      user = JoinUser.objects.get(last_name=form.last_name, first_name=form.first_name, )
+    except JoinUser.DoesNotExist:
+      pass
+    url = reverse_lazy('reception:test_success')
+    return HttpResponseRedirect(url)
+
+second_entry_form = SecondFormPreview(SecondEntryForm)
+
 # # 参加表入力(2回目)確認画面
-# class secondFormDetailView():
-#   pass
+class secondFormDetailView():
+  pass
+
+class JoinConfirm(TemplateView):
+  template_name = 'reception/join_confirm.html'
+
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    context["title"] = "20XX年第N回オープンキャンパス"
+    return context
+
+join_confirm = JoinConfirm.as_view()
 
 
 

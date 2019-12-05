@@ -4,6 +4,7 @@
 
 <head lang="ja">
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}受付システム{% endblock %}</title>
   <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
   <script src="{% static 'assets/js/jquery-3.4.1.min.js' %}"></script>
@@ -13,8 +14,8 @@
 </head>
 
 <body>
-  <section class="bg-light py-5">
-    <div class="container px-5">
+  <section class="bg-light">
+    <div class="container px-2">
       <h1 class="text-center">{% block page_title %}{% endblock %}</h1>
       {% block main %}{% endblock %}
     </div>

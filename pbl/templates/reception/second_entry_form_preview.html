@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 {% load static widget_tweaks %}
-{% block title %}初回登録画面{% endblock title %}
-{% block page_title %}参加者登録{% endblock page_title %}
+{% block title %}２回目以降登録画面{% endblock title %}
+{% block page_title %}２回目以降参加者登録{% endblock page_title %}
 {% block main %}
+<a href="javascript:history.back()">[入力画面に戻る]</a>
 <div class="card my-3 mx-2 shadow-sm">
 <table class="table">
   
@@ -15,23 +16,8 @@
     <td>{{ form.first_name.data }}</td>
   </tr>
   <tr>
-    <th>{{ form.read_last_name.label }}:</th>
-    <td>{{ form.read_last_name.data }}</td>
-  </tr>
-  <tr>
-    <th>{{ form.read_first_name.label }}:</th>
-    <td>{{ form.read_first_name.data }}</td>
-  </tr>
-  <tr>
     <th>{{ form.birthday.label }}:</th>
     <td>{{ form.birthday.data }}</td>
-  </tr>
-  <tr>
-    <th>{{ form.gender.label }}:</th>
-    <td>{% if form.gender.data == "1" %}男性
-        {% else %}女性
-        {% endif %}
-    </td>
   </tr>
   <tr>
     <th>{{ form.phone_number.label }}:</th>
@@ -41,45 +27,7 @@
     <th>{{ form.postal_code.label }}:</th>
     <td>{{ form.postal_code.data }}</td>
   </tr>
-  <tr>
-    <th>{{ form.street_address.label }}:</th>
-    <td>{{ form.street_address.data }}</td>
-  </tr>
-  <tr>
-    <th>{{ form.profession.label }}:</th>
-    <td>{% if form.profession.data == "1" %}学生
-        {% else %}その他
-        {% endif %}
-    </td>
-  </tr>
-  {% if form.profession.data == "1" %}
-    <tr>
-      <th>{{ form.school_year.label }}:</th>
-      <td>{{ form.school_year.data }}年</td>
-    </tr>
-    <tr>
-      <th>{{ form.graduation_year.label }}:</th>
-      <td>{{ form.graduation_year.data }}年</td>
-    </tr>
-    <tr>
-      <th>{{ form.high_school_name.label }}:</th>
-      <td>{{ form.high_school_name.data }}</td>
-    </tr>
-  {% else %}
-    <tr>
-      <th>{{ form.graduate.label }}:</th>
-      <td>{% if form.graduate.data %}はい
-          {% else %}いいえ
-          {% endif %}
-      </td>
-    </tr>
-    <tr>
-      <th>{{ form.certification.label }}:</th>
-      <td>{% if form.certification.data %}はい
-          {% else %}いいえ
-          {% endif %}</td>
-    </tr>
-  {% endif %}
+
   <tr>
     <th>{{ form.department.label }}:</th>
     <td>{% if form.department.data == "1" %}医療福祉事務学科
@@ -103,9 +51,7 @@
   {% endfor %}
   <input type="hidden" name="{{ stage_field }}" value="2" />
   <input type="hidden" name="{{ hash_field }}" value="{{ hash_value }}" />
-  <div class="row">
-    <button type="submit" class="btn btn-success col-sm-5 mx-auto">入力を確定する</button>
-    <button type = "button" class="btn btn-primary col-sm-5 mx-auto" onclick = "javascript:history.back()">入力画面に戻る</button>
-  </div>
+  <button type="submit" class="btn btn-success mt-5 mx-auto d-block col-sm-5">入力を確定する</button>
 </form>
+
 {% endblock %}
