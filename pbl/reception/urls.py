@@ -12,5 +12,5 @@ urlpatterns = [
   path('secondform/', views.second_entry_form, name='second_entry_form'),
   # path('secondform/detail/<int:pk>', views.second_entry_form_detail, name='second_entry_form_detail'),
   # シラガ
-  # path('joinconfirm/', views.join_confirm, name='join_confirm'),
+  path('join/', views.join_confirm, name='join_confirm'),
 ]

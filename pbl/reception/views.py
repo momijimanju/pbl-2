@@ -52,8 +52,11 @@ class SecondFormPreview(FormPreview):
     form = SecondEntryForm(request.POST)
 
     user = None
-    try{
-    }
+    # データベースの内容と一致するかどうか
+    try:
+      user = JoinUser.objects.get(last_name=form.last_name, first_name=form.first_name, )
+    except JoinUser.DoesNotExist:
+      pass
     url = reverse_lazy('reception:test_success')
     return HttpResponseRedirect(url)
 
@@ -61,7 +64,17 @@ second_entry_form = SecondFormPreview(SecondEntryForm)
 
 # # 参加表入力(2回目)確認画面
 class secondFormDetailView():
-#   pass
+  pass
+
+class JoinConfirm(TemplateView):
+  template_name = 'reception/join.html'
+
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    context["title"] = "20XX年第N回オープンキャンパス"
+    return context
+
+join_confirm = JoinConfirm.as_view()
 
 
 

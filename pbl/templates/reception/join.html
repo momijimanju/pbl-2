@@ -1,19 +1,8 @@
 {% extends "base.html" %}
 {% load static widget_tweaks %}
-{% block title %}初回登録画面{% endblock title %}
-{% block page_title %}参加者登録{% endblock page_title %}
+{% block title %}参加回数確認画面{% endblock title %}
+{% block page_title %}{{ title }}{% endblock page_title %}
 {% block main %}
-</font>
-<form method="GET" action="uke_top.php">
-<table>
-<tr><td><input type="submit" value="はい"
-style="WIDTH:150px; HEIGHT:50px;font-size:16pt;"><td>
-</form>
-<form method="GET" action="uke_kakunin.php">
-<td><input type="submit" value="いいえ"
-style="WIDTH:150px; HEIGHT:50px;font-size:16pt;"><td></tr>
-</table>
-</form>
-</body>
-</html>
+<button>はい</button>
+<button>いいえ</button>
 {% endblock %}
