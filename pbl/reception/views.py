@@ -67,7 +67,7 @@ class secondFormDetailView():
   pass
 
 class JoinConfirm(TemplateView):
-  template_name = 'reception/join.html'
+  template_name = 'reception/join_confirm.html'
 
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
