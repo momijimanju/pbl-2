@@ -3,7 +3,6 @@
 {% block title %}初回登録画面{% endblock title %}
 {% block page_title %}参加者登録{% endblock page_title %}
 {% block main %}
-<a href="javascript:history.back()">[入力画面に戻る]</a>
 <div class="card my-3 mx-2 shadow-sm">
 <table class="table">
   
@@ -69,14 +68,14 @@
   {% else %}
     <tr>
       <th>{{ form.graduate.label }}:</th>
-      <td>{% if form.profession.data == "2" and form.graduate.data %}はい
+      <td>{% if form.graduate.data %}はい
           {% else %}いいえ
           {% endif %}
       </td>
     </tr>
     <tr>
       <th>{{ form.certification.label }}:</th>
-      <td>{% if form.profession.data == "2" and form.certification.data %}はい
+      <td>{% if form.certification.data %}はい
           {% else %}いいえ
           {% endif %}</td>
     </tr>
@@ -104,7 +103,9 @@
   {% endfor %}
   <input type="hidden" name="{{ stage_field }}" value="2" />
   <input type="hidden" name="{{ hash_field }}" value="{{ hash_value }}" />
-  <button type="submit" class="btn btn-success mt-5 mx-auto d-block col-sm-5">入力を確定する</button>
+  <div class="row">
+    <button type="submit" class="btn btn-success col-sm-5 mx-auto">入力を確定する</button>
+    <button type = "button" class="btn btn-primary col-sm-5 mx-auto" onclick = "javascript:history.back()">入力画面に戻る</button>
+  </div>
 </form>
-
 {% endblock %}
