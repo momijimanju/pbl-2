@@ -47,8 +47,8 @@
     </div>
     <div class="form-group">
       <label for="birthday">{{ form.birthday.label }}</label>
-      <div class="form-inline">
-        {{ form.birthday }}
+      <div class="row birthday_select">
+          {{ form.birthday }}
       </div>
     </div>
     <div class="form-group">
@@ -202,7 +202,7 @@
         $('#formtools_high_school_name').prop('disabled', false);
         $('#formtools_school_year').prop('disabled', false);
         $('#formtools_graduation_year').prop('disabled', false);
-        $('#formtools_high_school_name').prop('required',true);
+        $('#formtools_high_school_name').prop('required', true);
       } else if (radio_val == 2) {
         // 学生ではない場合のフォーム
         $(".student_form").hide();
@@ -220,6 +220,8 @@
 
     // ロード時の初期表示を設定
     change_form($("input[name='profession']:radio:checked").val())
+    // 
+    $(".birthday_select").find("select").addClass('col mx-3');
 
     $("input[name='profession']:radio").change(function () {
       let profession_val = $(this).val();
@@ -229,11 +231,14 @@
 </script>
 <!-- 青い枠を消して、ラジオボタンを救いたい。 -->
 <style>
-  textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus {
-  outline: 0;
-  box-shadow: none;
-  border: 2px solid skyblue;
-  background-color: #ffffff;
-}
+  textarea:focus,
+  input:focus,
+  input[type]:focus,
+  .uneditable-input:focus {
+    outline: 0;
+    box-shadow: none;
+    border: 2px solid skyblue;
+    background-color: #ffffff;
+  }
 </style>
 {% endblock %}
