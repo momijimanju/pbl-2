@@ -74,10 +74,6 @@ class FirstEntryForm(forms.ModelForm):
   def clean_high_school_name(self):
     high_school_name = self.cleaned_data['high_school_name']
     profession = self.cleaned_data['profession']
-    # 学生を選択しているのに高校名が空
-    if profession == 1:
-      if high_school_name is None:
-        raise forms.ValidationError('このフィールドを入力してください')
     return high_school_name
 
   def clean_school_year(self):
@@ -86,7 +82,7 @@ class FirstEntryForm(forms.ModelForm):
     # 学生を選択しているのに高校名が空
     if profession == 1:
       if school_year is None:
-        raise forms.ValidationError('このフィールドを入力してください')
+        raise forms.ValidationError('いずれかの項目を選択してください')
     return school_year
 
   def clean_graduation_year(self):
@@ -95,7 +91,7 @@ class FirstEntryForm(forms.ModelForm):
     # 学生を選択しているのに高校名が空
     if profession == 1:
       if graduation_year is None:
-        raise forms.ValidationError('このフィールドを入力してください')
+        raise forms.ValidationError('いずれかの項目を選択してください')
     return graduation_year
 
 
