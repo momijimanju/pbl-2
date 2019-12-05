@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% load static widget_tweaks %}
+{% block title %}２回目以降登録画面{% endblock title %}
+{% block page_title %}２回目以降参加者登録{% endblock page_title %}
+{% block main %}
+<div class="card border-info my-3 mx-2 shadow-sm">
+  <form action="" method="post" class="mx-3 my-3" enctype="multipart/form-data">
+    <div class="row form-group">
+      <div class="col">
+        <label for="first_name">{{ form.last_name.label }}</label>
+        {{ form.last_name }}
+        {% if form.last_name.errors %}
+        <div class="alert alert-danger" role="alert">
+          {{ form.last_name.errors.0 }}
+        </div>
+        {% endif %}
+      </div>
+      <div class="col">
+        <label for="last_name">{{ form.first_name.label }}</label>
+        {{ form.first_name }}
+        {% if form.first_name.errors %}
+        <div class="alert alert-danger" role="alert">
+          {{ form.first_name.errors.0 }}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col">
+        <label for="first_name">{{ form.read_last_name.label }}</label>
+        {{ form.read_last_name }}
+        {% if form.read_last_name.errors %}
+        <div class="alert alert-danger" role="alert">
+          {{ form.read_last_name.errors.0 }}
+        </div>
+        {% endif %}
+      </div>
+      <div class="col">
+        <label for="last_name">{{ form.read_first_name.label }}</label>
+        {{ form.read_first_name }}
+        {% if form.read_first_name.errors %}
+        <div class="alert alert-danger" role="alert">
+          {{ form.read_first_name.errors.0 }}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="birthday">{{ form.birthday.label }}</label>
+      <div class="form-inline">
+        {{ form.birthday }}
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="phone_number">{{ form.phone_number.label }}</label>
+      {{ form.phone_number }}
+      {% if form.phone_number.errors %}
+      <div class="alert alert-danger" role="alert">
+        {{ form.phone_number.errors.0 }}
+      </div>
+      {% endif %}
+    </div>
+    <div class="form-group">
+      <label for="postal_code">{{ form.postal_code.label }}</label>
+      {{ form.postal_code }}
+      {% if form.postal_code.errors %}
+      <div class="alert alert-danger" role="alert">
+        {{ form.postal_code.errors.0 }}
+      </div>
+      {% endif %}
+    </div>
+    <div class="form-group">
+      <label for="department">{{ form.department.label }}</label>
+      <div class="col-sm-6">
+        {{ form.department }}
+        {% if form.department.errors %}
+        <div class="alert alert-danger" role="alert">
+          {{ form.department.errors.0 }}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    {% if form.errors %}
+    {{ form.non_field_errors }}
+    {% endif %}
+    <button type="submit" class="btn btn-info mt-5 mx-auto d-block col-sm-5">入力内容の確認に進む</button>
+    {% csrf_token %}
+  </form>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+  $(function () {
+    const change_form = radio_val => {
+      console.log('test')
+      if (radio_val == 1) {
+        // 学生の場合のフォーム
+        $(".other_form").hide();
+        $(".student_form").show();
+        // $(".student_form").find("input").prop("disabled", false);
+        // $(".other_form").find("input").prop("disabled", true);
+
+        $('#formtools_graduate').prop('disabled', true);
+        $('#formtools_certification').prop('disabled', true);
+        $('#formtools_high_school_name').prop('disabled', false);
+        $('#formtools_school_year').prop('disabled', false);
+        $('#formtools_graduation_year').prop('disabled', false);
+        $('#formtools_high_school_name').prop('required',true);
+      } else if (radio_val == 2) {
+        // 学生ではない場合のフォーム
+        $(".student_form").hide();
+        $(".other_form").show();
+        // $(".student_form").find("input").prop("disabled", true);
+        // $(".other_form").find("input").prop("disabled", false);
+        $('#formtools_high_school_name').prop('disabled', true);
+        $('#formtools_school_year').prop('disabled', true);
+        $('#formtools_graduation_year').prop('disabled', true);
+        $('#formtools_graduate').prop('disabled', false);
+        $('#formtools_certification').prop('disabled', false);
+      }
+
+    }
+
+    // ロード時の初期表示を設定
+    change_form($("input[name='profession']:radio:checked").val())
+
+    $("input[name='profession']:radio").change(function () {
+      let profession_val = $(this).val();
+      change_form(profession_val)
+    });
+  });
+</script>
+<!-- 青い枠を消して、ラジオボタンを救いたい。 -->
+<style>
+  textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus {
+  outline: 0;
+  box-shadow: none;
+  border: 2px solid skyblue;
+  background-color: #ffffff;
+}
+</style>
+{% endblock %}

@@ -127,6 +127,72 @@ class FirstEntryForm(forms.ModelForm):
     self.fields['high_school_name'].widget.attrs['placeholder'] = PLACE_HOLDER['high_school_name']
 
 
+# 2回目以降参加者入力画面のフォーム
+class SecondEntryForm(forms.ModelForm):
+  class Meta:
+    model = JoinUser
+    fields = ('first_name', 'last_name',
+               'birthday', 'phone_number', 'postal_code', 
+                'department',
+    )
+    
+    widgets = {
+            'birthday': forms.SelectDateWidget(years=[x for x in range(1950, datetime.datetime.now().year + 1)]),
+            'gender': forms.RadioSelect,
+            'profession': forms.RadioSelect,
+    }
+
+  def clean_last_name(self):
+    last_name = self.cleaned_data['last_name']
+    if last_name is None:
+      raise forms.ValidationError('このフィールドを入力してください')
+    return last_name
+  def clean_first_name(self):
+    first_name = self.cleaned_data['first_name']
+    if first_name is None:
+      raise forms.ValidationError('このフィールドを入力してください')
+    return first_name
+  def clean_phone_number(self):
+    phone_number = self.cleaned_data['phone_number']
+    if len(phone_number) < 10:
+      raise forms.ValidationError('10桁以上で入力してください')
+    if NUMBER_RE.match(r'{}'.format(phone_number)) is None:
+      raise forms.ValidationError('半角数字で入力し、記号や全角数字を使用しないでください')
+    return phone_number
+
+  def clean_postal_code(self):
+    postal_code = self.cleaned_data['postal_code']
+    if len(postal_code) < 7:
+      raise forms.ValidationError('7桁で入力してください')
+    if NUMBER_RE.match(r'{}'.format(postal_code)) is None:
+      raise forms.ValidationError('半角数字で入力し、記号や全角数字を使用しないでください')
+    return postal_code
+
+
+  def __init__(self, *args, **kwargs):
+    super().__init__(*args, **kwargs)
+    # 郵便番号を入力すると住所を自動的に入力するための属性指定
+    self.fields['postal_code'].widget.attrs['onKeyUp'] = "AjaxZip3.zip2addr(this,'','street_address','street_address');"
+    # self.fields['street_address'].widget.attrs['readonly'] = True
+    for field in self.fields.values():
+      field.widget.attrs['class'] = 'form-control'
+
+    PLACE_HOLDER = {
+      'last_name': '二宮',
+      'first_name': '一馬',
+      'phone_number': self.fields['phone_number'].help_text,
+      'postal_code': self.fields['postal_code'].help_text,
+
+    }
+
+    # プレースホルダー
+    self.fields['last_name'].widget.attrs['placeholder'] = PLACE_HOLDER['last_name']
+    self.fields['first_name'].widget.attrs['placeholder'] = PLACE_HOLDER['first_name']
+    self.fields['phone_number'].widget.attrs['placeholder'] = PLACE_HOLDER['phone_number']
+    self.fields['postal_code'].widget.attrs['placeholder'] = PLACE_HOLDER['postal_code']
+    
+
+
 
 
 
