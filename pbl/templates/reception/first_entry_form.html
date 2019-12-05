@@ -179,7 +179,7 @@
     {% if form.errors %}
     {{ form.non_field_errors }}
     {% endif %}
-    <button type="submit" class="btn btn-info mt-5 mx-auto d-block col-sm-5">入力内容の確認に進む</button>
+    <button type="submit" class="btn btn-success mt-5 mx-auto d-block col-sm-5" id="unko">入力内容の確認に進む</button>
     {% csrf_token %}
   </form>
 </div>
@@ -190,6 +190,9 @@
   $(function () {
     const change_form = radio_val => {
       console.log('test')
+      $('#myunko').on('submit', function () {
+        $('#unko').prop('disabled', true);
+      });
       if (radio_val == 1) {
         // 学生の場合のフォーム
         $(".other_form").hide();
@@ -220,9 +223,8 @@
 
     // ロード時の初期表示を設定
     change_form($("input[name='profession']:radio:checked").val())
-    // 
-    $(".birthday_select").find("select").addClass('col mx-3');
 
+    $(".birthday_select").find("select").addClass('col mx-3');
     $("input[name='profession']:radio").change(function () {
       let profession_val = $(this).val();
       change_form(profession_val)
