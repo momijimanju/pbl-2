@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.core.cache import cache
 from django.views import View
 from django.views.generic import View, TemplateView, FormView
 from django.http import HttpResponse, HttpResponseRedirect
@@ -29,6 +30,8 @@ class FirstEntryFormPreview(FormPreview):
         
     join_user = form.save(commit=False)
     join_user.save()
+
+    cache.clear()
         
     url = reverse_lazy('reception:test_success')
     return HttpResponseRedirect(url)
@@ -54,9 +57,13 @@ class SecondFormPreview(FormPreview):
     user = None
     # データベースの内容と一致するかどうか
     try:
-      user = JoinUser.objects.get(last_name=form.last_name, first_name=form.first_name, )
+      user = JoinUser.objects.get(last_name=form.last_name, first_name=form.first_name)
     except JoinUser.DoesNotExist:
-      pass
+      print('検索ヒットなし')
+    try:
+      user = JoinUser.objects.get(last_name=form.last_name, first_name=form.first_name)
+    except JoinUser.DoesNotExist:
+      print('検索ヒットなし')
     url = reverse_lazy('reception:test_success')
     return HttpResponseRedirect(url)
 

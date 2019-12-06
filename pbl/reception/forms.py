@@ -8,6 +8,7 @@ TWO_BYTES_NUMBER_RE = re.compile('[０１２３４５６７８９]+')
 UPPER_ALPHABET_RE = re.compile('[Ａ-Ｚ]+')
 LOWER_ALPHABET_RE = re.compile('[ａ-ｚ]+')
 KATAKANA_RE = re.compile('^[ァ-ンヴー]*$')
+SPACE_RE = re.compile('\s+')
 
 # 初回参加者入力画面のフォーム
 class FirstEntryForm(forms.ModelForm):
@@ -27,25 +28,25 @@ class FirstEntryForm(forms.ModelForm):
 
   def clean_last_name(self):
     last_name = self.cleaned_data['last_name']
-    if last_name is None:
-      raise forms.ValidationError('このフィールドを入力してください')
+    if SPACE_RE.match(r'{}'.format(last_name)) is None:
+      raise forms.ValidationError('空白文字が含まれています')
     return last_name
   def clean_first_name(self):
     first_name = self.cleaned_data['first_name']
-    if first_name is None:
-      raise forms.ValidationError('このフィールドを入力してください')
+    if SPACE_RE.match(r'{}'.format(first_name)) is None:
+      raise forms.ValidationError('空白文字が含まれています')
     return first_name
   def clean_read_last_name(self):
     read_last_name = self.cleaned_data['read_last_name']
-    if read_last_name is None:
-      raise forms.ValidationError('このフィールドを入力してください')
+    if SPACE_RE.match(r'{}'.format(read_last_name)) is None:
+      raise forms.ValidationError('空白文字が含まれています')
     if KATAKANA_RE.match(r'{}'.format(read_last_name)) is None:
       raise forms.ValidationError('カタカナで入力してください')
     return read_last_name
   def clean_read_first_name(self):
     read_first_name = self.cleaned_data['read_first_name']
-    if read_first_name is None:
-      raise forms.ValidationError('このフィールドを入力してください')
+    if SPACE_RE.match(r'{}'.format(read_first_name)) is None:
+      raise forms.ValidationError('空白文字が含まれています')
     if KATAKANA_RE.match(r'{}'.format(read_first_name)) is None:
       raise forms.ValidationError('カタカナで入力してください')
     return read_first_name
@@ -74,12 +75,14 @@ class FirstEntryForm(forms.ModelForm):
   def clean_high_school_name(self):
     high_school_name = self.cleaned_data['high_school_name']
     profession = self.cleaned_data['profession']
+    if SPACE_RE.match(r'{}'.format(profession)) is None:
+      raise forms.ValidationError('空白文字が含まれています')
     return high_school_name
 
   def clean_school_year(self):
     school_year = self.cleaned_data['school_year']
     profession = self.cleaned_data['profession']
-    # 学生を選択しているのに高校名が空
+    # 学生を選択しているのに空
     if profession == 1:
       if school_year is None:
         raise forms.ValidationError('いずれかの項目を選択してください')
@@ -88,7 +91,7 @@ class FirstEntryForm(forms.ModelForm):
   def clean_graduation_year(self):
     graduation_year = self.cleaned_data['graduation_year']
     profession = self.cleaned_data['profession']
-    # 学生を選択しているのに高校名が空
+    # 学生を選択しているのに空
     if profession == 1:
       if graduation_year is None:
         raise forms.ValidationError('いずれかの項目を選択してください')
