@@ -57,14 +57,18 @@ class SecondFormPreview(FormPreview):
     user = None
     # データベースの内容と一致するかどうか
     try:
-      user = JoinUser.objects.get(last_name=form.last_name, first_name=form.first_name)
+      user = JoinUser.objects.get(last_name=form.last_name, first_name=form.first_name, birthday=form.birthday, phone_number=form.phone_number)
     except JoinUser.DoesNotExist:
-      print('検索ヒットなし')
+      print('電話番号での検索ヒットなし')
     try:
-      user = JoinUser.objects.get(last_name=form.last_name, first_name=form.first_name)
+      user = JoinUser.objects.get(last_name=form.last_name, first_name=form.first_name, birthday=form.birthday, postal_code=form.postal_code)
     except JoinUser.DoesNotExist:
-      print('検索ヒットなし')
-    url = reverse_lazy('reception:test_success')
+      print('郵便番号での検索ヒットなし')
+    
+    if user is None:
+      url = reverse_lazy('reception:test_failed')
+    else:
+      url = reverse_lazy('reception:second_entry_form_detail')
     return HttpResponseRedirect(url)
 
 second_entry_form = SecondFormPreview(SecondEntryForm)
