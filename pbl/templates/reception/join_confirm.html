@@ -1,8 +1,14 @@
 {% extends "base.html" %}
 {% load static widget_tweaks %}
 {% block title %}参加回数確認画面{% endblock title %}
-{% block page_title %}{{ title }}{% endblock page_title %}
 {% block main %}
-<button>はい</button>
-<button>いいえ</button>
+<div class="card border-info my-3 mx-2 shadow-sm container">
+	<div class = "py-5 mx-auto">
+		<h2>オープンキャンパスの参加は初めてですか？</h2>
+	</div>
+	<div class="row py-5">
+		<a href="{% url 'reception:first_entry_form_preview' %}" class="btn btn-outline-success btn-lg col-sm-4 mx-auto">はい</a>
+		<a href="{% url 'reception:second_entry_form' %}" class="btn btn-outline-success btn-lg col-sm-4 mx-auto">いいえ</a>
+	</div>
+</div>
 {% endblock %}
