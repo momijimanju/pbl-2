@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static widget_tweaks %}
 {% block title %}２回目以降登録画面{% endblock title %}
-{% block page_title %}２回目以降参加者登録{% endblock page_title %}
+{% block page_title %}検索画面{% endblock page_title %}
 {% block main %}
 <a href="javascript:history.back()">[入力画面に戻る]</a>
 <div class="card my-3 mx-2 shadow-sm">
@@ -30,18 +30,18 @@
 
   <tr>
     <th>{{ form.department.label }}:</th>
-    <td>{% if form.department.data == "1" %}医療福祉事務学科
-      {% elif form.department.data == "2" %}診療情報管理士学科
-      {% elif form.department.data == "3" %}ホテル・ブライダル学科
-      {% elif form.department.data == "4" %}経営アシスト学科
-      {% elif form.department.data == "5" %}公務員・公務員速修学科
-      {% elif form.department.data == "6" %}保育学科
-      {% elif form.department.data == "7" %}情報スペシャリスト学科
-      {% elif form.department.data == "8" %}情報システム学科
-      {% elif form.department.data == "9" %}ゲームクリエイター・ゲームプログラマー学科
-      {% elif form.department.data == "10" %}データマーケター学科
-      {% elif form.department.data == "11" %}ネット・動画クリエイター学科
-      {% elif form.department.data == "12" %}CGデザイン学科
+    <td>{% if form.department.data == 1 %}医療福祉事務学科
+      {% elif form.department.data == 2 %}診療情報管理士学科
+      {% elif form.department.data == 3 %}ホテル・ブライダル学科
+      {% elif form.department.data == 4 %}経営アシスト学科
+      {% elif form.department.data == 5 %}公務員・公務員速修学科
+      {% elif form.department.data == 6 %}保育学科
+      {% elif form.department.data == 7 %}情報スペシャリスト学科
+      {% elif form.department.data == 8 %}情報システム学科
+      {% elif form.department.data == 9 %}ゲームクリエイター・ゲームプログラマー学科
+      {% elif form.department.data == 10 %}データマーケター学科
+      {% elif form.department.data == 11 %}ネット・動画クリエイター学科
+      {% elif form.department.data == 12 %}CGデザイン学科
       {% endif %}</td>
   </tr>
 </table>
@@ -51,7 +51,7 @@
   {% endfor %}
   <input type="hidden" name="{{ stage_field }}" value="2" />
   <input type="hidden" name="{{ hash_field }}" value="{{ hash_value }}" />
-  <button type="submit" class="btn btn-success mt-5 mx-auto d-block col-sm-5">入力を確定する</button>
+  <button type="submit" class="btn btn-success mt-5 mx-auto d-block col-sm-5">検索する</button>
 </form>
 
 {% endblock %}

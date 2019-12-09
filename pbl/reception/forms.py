@@ -3,12 +3,12 @@ from .models import JoinUser
 import datetime
 import re
 
+# 正規表現
 NUMBER_RE = re.compile('^[0-9]+$')
 TWO_BYTES_NUMBER_RE = re.compile('[０１２３４５６７８９]+')
 UPPER_ALPHABET_RE = re.compile('[Ａ-Ｚ]+')
 LOWER_ALPHABET_RE = re.compile('[ａ-ｚ]+')
 KATAKANA_RE = re.compile('^[ァ-ンヴー]*$')
-SPACE_RE = re.compile('[\s ]+')
 
 # 初回参加者入力画面のフォーム
 class FirstEntryForm(forms.ModelForm):
@@ -21,38 +21,32 @@ class FirstEntryForm(forms.ModelForm):
     )
     
     widgets = {
-            'birthday': forms.SelectDateWidget(years=[x for x in range(1950, datetime.datetime.now().year + 1)]),
-            'gender': forms.RadioSelect,
-            'profession': forms.RadioSelect,
+                'birthday': forms.SelectDateWidget(years=[x for x in range(1950, datetime.datetime.now().year + 1)]),
     }
 
   def clean_last_name(self):
     last_name = self.cleaned_data['last_name']
-    print(last_name)
-    if SPACE_RE.match(r'{}'.format(last_name)) is not None:
-      raise forms.ValidationError('空白文字が含まれています')
+    last_name = last_name.replace(' ', '').replace('　', '')
     return last_name
   def clean_first_name(self):
     first_name = self.cleaned_data['first_name']
-    if SPACE_RE.match(r'{}'.format(first_name)) is not None:
-      raise forms.ValidationError('空白文字が含まれています')
+    first_name = first_name.replace(' ', '').replace('　', '')
     return first_name
   def clean_read_last_name(self):
     read_last_name = self.cleaned_data['read_last_name']
-    if SPACE_RE.match(r'{}'.format(read_last_name)) is not None:
-      raise forms.ValidationError('空白文字が含まれています')
+    read_last_name = read_last_name.replace(' ', '').replace('　', '')
     if KATAKANA_RE.match(r'{}'.format(read_last_name)) is None:
       raise forms.ValidationError('カタカナで入力してください')
     return read_last_name
   def clean_read_first_name(self):
     read_first_name = self.cleaned_data['read_first_name']
-    if SPACE_RE.match(r'{}'.format(read_first_name)) is not None:
-      raise forms.ValidationError('空白文字が含まれています')
+    read_first_name = read_first_name.replace(' ', '').replace('　', '')
     if KATAKANA_RE.match(r'{}'.format(read_first_name)) is None:
       raise forms.ValidationError('カタカナで入力してください')
     return read_first_name
   def clean_phone_number(self):
     phone_number = self.cleaned_data['phone_number']
+    phone_number = phone_number.replace(' ', '').replace('　', '')
     if len(phone_number) < 10:
       raise forms.ValidationError('10桁以上で入力してください')
     if NUMBER_RE.match(r'{}'.format(phone_number)) is None:
@@ -61,6 +55,7 @@ class FirstEntryForm(forms.ModelForm):
 
   def clean_postal_code(self):
     postal_code = self.cleaned_data['postal_code']
+    postal_code = postal_code.replace(' ', '').replace('　', '')
     if len(postal_code) < 7:
       raise forms.ValidationError('7桁で入力してください')
     if NUMBER_RE.match(r'{}'.format(postal_code)) is None:
@@ -69,6 +64,7 @@ class FirstEntryForm(forms.ModelForm):
 
   def clean_street_address(self):
     street_address = self.cleaned_data['street_address']
+    street_address = street_address.replace(' ', '').replace('　', '')
     if TWO_BYTES_NUMBER_RE.search(r'{}'.format(street_address)) is not None:
       raise forms.ValidationError('半角数字を使用し、全角数字を使用しないでください')
     return street_address
@@ -76,8 +72,10 @@ class FirstEntryForm(forms.ModelForm):
   def clean_high_school_name(self):
     high_school_name = self.cleaned_data['high_school_name']
     profession = self.cleaned_data['profession']
-    if SPACE_RE.match(r'{}'.format(profession)) is not None:
-      raise forms.ValidationError('空白文字が含まれています')
+    # 学生を選択しているのに空
+    if profession == 1:
+      if high_school_name is None:
+        raise forms.ValidationError('学生を選択している場合必須です')
     return high_school_name
 
   def clean_school_year(self):
@@ -117,7 +115,6 @@ class FirstEntryForm(forms.ModelForm):
       'postal_code': self.fields['postal_code'].help_text,
       'street_address': self.fields['street_address'].help_text,
       'high_school_name': self.fields['high_school_name'].help_text,
-
     }
 
     # プレースホルダー
@@ -137,7 +134,6 @@ class SecondEntryForm(forms.ModelForm):
     model = JoinUser
     fields = ('first_name', 'last_name',
                'birthday', 'phone_number', 'postal_code', 
-                'department',
     )
     
     widgets = {

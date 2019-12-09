@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.core.cache import cache
 from django.views import View
-from django.views.generic import View, TemplateView, FormView
+from django.views.generic import View, TemplateView, FormView, DetailView, UpdateView
 from django.http import HttpResponse, HttpResponseRedirect
 from formtools.preview import FormPreview
 from django.urls import reverse_lazy
@@ -30,8 +30,6 @@ class FirstEntryFormPreview(FormPreview):
         
     join_user = form.save(commit=False)
     join_user.save()
-
-    cache.clear()
         
     url = reverse_lazy('reception:test_success')
     return HttpResponseRedirect(url)
@@ -52,30 +50,51 @@ class SecondFormPreview(FormPreview):
   preview_template = 'reception/second_entry_form_preview.html'
   form_template = 'reception/second_entry_form.html'
   def done(self, request, cleaned_data):
-    form = SecondEntryForm(request.POST)
+    print(cleaned_data['last_name'])
 
     user = None
     # データベースの内容と一致するかどうか
     try:
-      user = JoinUser.objects.get(last_name=form.last_name, first_name=form.first_name, birthday=form.birthday, phone_number=form.phone_number)
+      user = JoinUser.objects.get(last_name=cleaned_data['last_name'], first_name=cleaned_data['first_name'], birthday=cleaned_data['birthday'], phone_number=cleaned_data['phone_number'])
     except JoinUser.DoesNotExist:
       print('電話番号での検索ヒットなし')
     try:
-      user = JoinUser.objects.get(last_name=form.last_name, first_name=form.first_name, birthday=form.birthday, postal_code=form.postal_code)
+      user = JoinUser.objects.get(last_name=cleaned_data['last_name'], first_name=cleaned_data['first_name'], birthday=cleaned_data['birthday'], postal_code=cleaned_data['postal_code'])
     except JoinUser.DoesNotExist:
       print('郵便番号での検索ヒットなし')
     
     if user is None:
       url = reverse_lazy('reception:test_failed')
     else:
-      url = reverse_lazy('reception:second_entry_form_detail')
+      url = reverse_lazy('reception:second_entry_detail', kwargs={'pk': user.id})
     return HttpResponseRedirect(url)
 
 second_entry_form = SecondFormPreview(SecondEntryForm)
 
 # # 参加表入力(2回目)確認画面
-class secondFormDetailView():
-  pass
+class SecondEntryDetailView(DetailView):
+  model = JoinUser
+  template_name = 'reception/second_entry_detail.html'
+
+second_entry_detail = SecondEntryDetailView.as_view()
+
+class SecondEntryUpdateView(UpdateView):
+  model = JoinUser
+  form_class = FirstEntryForm
+  template_name = 'reception/second_entry_update.html'
+
+  def get_success_url(self):
+    return reverse_lazy('reception:second_entry_detail', kwargs={'pk': self.kwargs['pk']})
+  
+  def form_valid(self, form):
+    join_user = form.save(commit=False)
+    # ラジオボタンくん保存されてくれーーーーー
+    join_user.gender = form.cleaned_data['gender']
+    join_user.profession = form.cleaned_data['profession']
+    join_user.save()
+    return super().form_valid(form)
+
+second_entry_update = SecondEntryUpdateView.as_view()
 
 class JoinConfirm(TemplateView):
   template_name = 'reception/join_confirm.html'

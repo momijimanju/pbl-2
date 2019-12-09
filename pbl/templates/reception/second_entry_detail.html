@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load static widget_tweaks %}
+{% block title %}参加回数確認画面{% endblock title %}
+{% block page_title %}確認画面{% endblock page_title %}
+{% block main %}
+<div class="card border-info my-3 mx-2 shadow-sm">
+  <table class="table text-center">
+
+    <tr>
+      <th>名字</th>
+      <td>{{ joinuser.last_name }}</td>
+    </tr>
+    <tr>
+      <th>名前</th>
+      <td>{{ joinuser.first_name }}</td>
+    </tr>
+    <tr>
+      <th>名字(カナ)</th>
+      <td>{{ joinuser.read_last_name }}</td>
+    </tr>
+    <tr>
+      <th>名前(カナ)</th>
+      <td>{{ joinuser.read_first_name }}</td>
+    </tr>
+    <tr>
+      <th>生年月日</th>
+      <td>{{ joinuser.birthday }}</td>
+    </tr>
+    <tr>
+      <th>性別</th>
+      <td>{% if joinuser.gender == 1 %}男性
+        {% elif joinuser.gender == 2 %}女性
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <th>電話番号</th>
+      <td>{{ joinuser.phone_number }}</td>
+    </tr>
+    <tr>
+      <th>郵便番号</th>
+      <td>{{ joinuser.postal_code }}</td>
+    </tr>
+    <tr>
+      <th>住所</th>
+      <td>{{ joinuser.street_address }}</td>
+    </tr>
+    <tr>
+      <th>職業</th>
+      <td>{% if joinuser.profession == 1 %}学生
+        {% elif joinuser.profession == 2 %}その他
+        {% endif %}
+      </td>
+    </tr>
+    {% if joinuser.profession == 1 %}
+    <tr>
+      <th>学年</th>
+      <td>{{ joinuser.school_year }}年</td>
+    </tr>
+    <tr>
+      <th>卒業予定年</th>
+      <td>{{ joinuser.graduation_year }}年</td>
+    </tr>
+    <tr>
+      <th>高校名</th>
+      <td>{{ joinuser.high_school_name }}</td>
+    </tr>
+    {% elif joinuser.profession == 2 %}
+    <tr>
+      <th>高校卒業済み</th>
+      <td>{% if joinuser.graduate %}はい
+        {% else %}いいえ
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <th>高認取得済み</th>
+      <td>{% if joinuser.certification %}はい
+        {% else %}いいえ
+        {% endif %}</td>
+    </tr>
+    {% endif %}
+    <tr>
+      <th>参加希望学科</th>
+      <td>{% if joinuser.department == 1 %}医療福祉事務学科
+        {% elif joinuser.department == 2 %}診療情報管理士学科
+        {% elif joinuser.department == 3 %}ホテル・ブライダル学科
+        {% elif joinuser.department == 4 %}経営アシスト学科
+        {% elif joinuser.department == 5 %}公務員・公務員速修学科
+        {% elif joinuser.department == 6 %}保育学科
+        {% elif joinuser.department == 7 %}情報スペシャリスト学科
+        {% elif joinuser.department == 8 %}情報システム学科
+        {% elif joinuser.department == 9 %}ゲームクリエイター・ゲームプログラマー学科
+        {% elif joinuser.department == 10 %}データマーケター学科
+        {% elif joinuser.department == 11 %}ネット・動画クリエイター学科
+        {% elif joinuser.department == 12 %}CGデザイン学科
+        {% endif %}
+      </td>
+    </tr>
+  </table>
+  <a href="{% url 'reception:second_entry_update' joinuser.id %}" class="btn btn-outline-success btn-lg col mx-4">編集する</a>
+</div>
+{% endblock %}

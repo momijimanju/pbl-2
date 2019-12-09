@@ -1,116 +1,10 @@
 {% extends "base.html" %}
 {% load static widget_tweaks %}
-{% load i18n %}
 {% block title %}初回登録画面{% endblock title %}
 {% block page_title %}参加者登録{% endblock page_title %}
 {% block main %}
 <div class="card border-info my-3 mx-2 shadow-sm">
-  <div class=" check">
-  <table class="table">
-
-    <tr>
-      <th>{{ form.last_name.label }}:</th>
-      <td>{{ form.last_name.data }}</td>
-    </tr>
-    <tr>
-      <th>{{ form.first_name.label }}:</th>
-      <td>{{ form.first_name.data }}</td>
-    </tr>
-    <tr>
-      <th>{{ form.read_last_name.label }}:</th>
-      <td>{{ form.read_last_name.data }}</td>
-    </tr>
-    <tr>
-      <th>{{ form.read_first_name.label }}:</th>
-      <td>{{ form.read_first_name.data }}</td>
-    </tr>
-    <tr>
-      <th>{{ form.birthday.label }}:</th>
-      <td>{{ form.birthday.data }}</td>
-    </tr>
-    <tr>
-      <th>{{ form.gender.label }}:</th>
-      <td>{% if form.gender.data == "1" %}男性
-        {% elif form.gender.data == "2" %}女性
-        {% endif %}
-      </td>
-    </tr>
-    <tr>
-      <th>{{ form.phone_number.label }}:</th>
-      <td>{{ form.phone_number.data }}</td>
-    </tr>
-    <tr>
-      <th>{{ form.postal_code.label }}:</th>
-      <td>{{ form.postal_code.data }}</td>
-    </tr>
-    <tr>
-      <th>{{ form.street_address.label }}:</th>
-      <td>{{ form.street_address.data }}</td>
-    </tr>
-    <tr>
-      <th>{{ form.profession.label }}:</th>
-      <td>{% if form.profession.data == "1" %}学生
-        {% elif form.profession.data == "2" %}その他
-        {% endif %}
-      </td>
-    </tr>
-    {% if form.profession.data == "1" %}
-    <tr>
-      <th>{{ form.school_year.label }}:</th>
-      <td>{{ form.school_year.data }}年</td>
-    </tr>
-    <tr>
-      <th>{{ form.graduation_year.label }}:</th>
-      <td>{{ form.graduation_year.data }}年</td>
-    </tr>
-    <tr>
-      <th>{{ form.high_school_name.label }}:</th>
-      <td>{{ form.high_school_name.data }}</td>
-    </tr>
-    {% elif form.profession.data == "2" %}
-    <tr>
-      <th>{{ form.graduate.label }}:</th>
-      <td>{% if form.graduate.data %}はい
-        {% else %}いいえ
-        {% endif %}
-      </td>
-    </tr>
-    <tr>
-      <th>{{ form.certification.label }}:</th>
-      <td>{% if form.certification.data %}はい
-        {% else %}いいえ
-        {% endif %}</td>
-    </tr>
-    {% endif %}
-    <tr>
-      <th>{{ form.department.label }}:</th>
-      <td>{% if form.department.data == "1" %}医療福祉事務学科
-        {% elif form.department.data == "2" %}診療情報管理士学科
-        {% elif form.department.data == "3" %}ホテル・ブライダル学科
-        {% elif form.department.data == "4" %}経営アシスト学科
-        {% elif form.department.data == "5" %}公務員・公務員速修学科
-        {% elif form.department.data == "6" %}保育学科
-        {% elif form.department.data == "7" %}情報スペシャリスト学科
-        {% elif form.department.data == "8" %}情報システム学科
-        {% elif form.department.data == "9" %}ゲームクリエイター・ゲームプログラマー学科
-        {% elif form.department.data == "10" %}データマーケター学科
-        {% elif form.department.data == "11" %}ネット・動画クリエイター学科
-        {% elif form.department.data == "12" %}CGデザイン学科
-        {% endif %}</td>
-    </tr>
-  </table>
-  <form action="" method="post">{% csrf_token %}
-    {% for field in form %}{{ field.as_hidden }}
-    {% endfor %}
-    <input type="hidden" name="{{ stage_field }}" value="2" />
-    <input type="hidden" name="{{ hash_field }}" value="{{ hash_value }}" />
-    <div class="row">
-      <button type="submit" class="btn btn-success col mx-5">確定</button>
-      <button type="button" class="btn btn-primary col mx-5" id="edit_button">編集</button>
-    </div>
-  </form>
-  </div>
-  <form action="" method="post" class="edit mx-3 my-3" enctype="multipart/form-data">
+  <form action="" method="post" class="mx-3 my-3" enctype="multipart/form-data">
     <div class="row form-group">
       <div class="col">
         <label for="first_name">{{ form.last_name.label }}</label>
@@ -160,11 +54,7 @@
     <div class="form-group">
       <label>{{ form.gender.label }}</label>
       <div class="form-inline">
-        {% for radio_button in form.gender %}
-        <div class="mr-4">
-          {{ radio_button }}
-        </div>
-        {% endfor %}
+        {{ form.gender }}
         {% if form.gender.errors %}
         <div class="alert alert-danger" role="alert">
           {{ form.gender.errors.0 }}
@@ -202,11 +92,7 @@
     <div class="form-group">
       <label for="street_address">{{ form.profession.label }}</label>
       <div class="form-inline">
-        {% for radio_button in form.profession %}
-        <div class="mr-4">
-          {{ radio_button }}
-        </div>
-        {% endfor %}
+        {{ form.profession }}
         {% if form.profession.errors %}
         <div class="alert alert-danger" role="alert">
           {{ form.profession.errors.0 }}
@@ -285,25 +171,24 @@
     {% if form.errors %}
     {{ form.non_field_errors }}
     {% endif %}
-    <input type="hidden" name="{{ stage_field }}" value="1" />
-    <button type="submit" class="btn btn-success mt-5 mx-auto d-block col-sm-5">入力内容の確認に進む</button>
+    <button type="submit" class="btn btn-success mt-5 mx-auto d-block col-sm-5">編集を終了する</button>
     {% csrf_token %}
   </form>
-
 </div>
 {% endblock %}
 
 {% block js %}
 <script>
   $(function () {
-    const change_form = radio_val => {
-      if (radio_val == 1) {
+    // フォーム切り替え関数
+    const change_form = select_val => {
+      if (select_val == 1) {
         // 学生の場合のフォーム
         $(".other_form").hide();
         $(".student_form").show();
         $(".student_form").find("input").prop("disabled", false);
         $(".other_form").find("input").prop("disabled", true);
-      } else if (radio_val == 2) {
+      } else if (select_val == 2) {
         // 学生ではない場合のフォーム
         $(".student_form").hide();
         $(".other_form").show();
@@ -311,24 +196,18 @@
         $(".other_form").find("input").prop("disabled", false);
       }
     }
-
-    $('button').on('submit', function () {
-        $('button').prop('disabled', true);
-    });
-
     // ロード時の初期表示を設定
-    change_form($("input[name='profession']:radio:checked").val())
-    $('.edit').hide();
-
+    change_form($("#id_profession").val())
+    // 複数送信不可
+    $('button').on('submit', function () {
+      $('button').prop('disabled', true);
+    });
+    // 生年月日位置調整
     $(".birthday_select").find("select").addClass('col mx-3');
-    $("input[name='profession']:radio").change(function () {
+    // フォーム切り替え
+    $("#id_profession").change(function () {
       let profession_val = $(this).val();
       change_form(profession_val)
-    });
-    // 編集画面に切り替え
-    $('#edit_button').click(function(){
-        $('.check').hide();
-        $('.edit').show();
     });
   });
 </script>
