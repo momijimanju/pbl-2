@@ -48,17 +48,13 @@
     <div class="form-group">
       <label for="birthday">{{ form.birthday.label }}</label>
       <div class="row birthday_select">
-          {{ form.birthday }}
+        {{ form.birthday }}
       </div>
     </div>
     <div class="form-group">
       <label>{{ form.gender.label }}</label>
       <div class="form-inline">
-        {% for radio_button in form.gender %}
-        <div class="mr-4">
-          {{ radio_button }}
-        </div>
-        {% endfor %}
+        {{ form.gender }}
         {% if form.gender.errors %}
         <div class="alert alert-danger" role="alert">
           {{ form.gender.errors.0 }}
@@ -96,11 +92,7 @@
     <div class="form-group">
       <label for="street_address">{{ form.profession.label }}</label>
       <div class="form-inline">
-        {% for radio_button in form.profession %}
-        <div class="mr-4">
-          {{ radio_button }}
-        </div>
-        {% endfor %}
+        {{ form.profession }}
         {% if form.profession.errors %}
         <div class="alert alert-danger" role="alert">
           {{ form.profession.errors.0 }}
@@ -179,7 +171,7 @@
     {% if form.errors %}
     {{ form.non_field_errors }}
     {% endif %}
-    <button type="submit" class="btn btn-success mt-5 mx-auto d-block col-sm-5" id="unko">入力内容の確認に進む</button>
+    <button type="submit" class="btn btn-success mt-5 mx-auto d-block col-sm-5">編集を終了する</button>
     {% csrf_token %}
   </form>
 </div>
@@ -188,44 +180,32 @@
 {% block js %}
 <script>
   $(function () {
-    const change_form = radio_val => {
-      console.log('test')
-      $('#myunko').on('submit', function () {
-        $('#unko').prop('disabled', true);
-      });
-      if (radio_val == 1) {
+    // フォーム切り替え関数
+    const change_form = select_val => {
+      if (select_val == 1) {
         // 学生の場合のフォーム
         $(".other_form").hide();
         $(".student_form").show();
-        // $(".student_form").find("input").prop("disabled", false);
-        // $(".other_form").find("input").prop("disabled", true);
-
-        $('#formtools_graduate').prop('disabled', true);
-        $('#formtools_certification').prop('disabled', true);
-        $('#formtools_high_school_name').prop('disabled', false);
-        $('#formtools_school_year').prop('disabled', false);
-        $('#formtools_graduation_year').prop('disabled', false);
-        $('#formtools_high_school_name').prop('required', true);
-      } else if (radio_val == 2) {
+        $(".student_form").find("input").prop("disabled", false);
+        $(".other_form").find("input").prop("disabled", true);
+      } else if (select_val == 2) {
         // 学生ではない場合のフォーム
         $(".student_form").hide();
         $(".other_form").show();
-        // $(".student_form").find("input").prop("disabled", true);
-        // $(".other_form").find("input").prop("disabled", false);
-        $('#formtools_high_school_name').prop('disabled', true);
-        $('#formtools_school_year').prop('disabled', true);
-        $('#formtools_graduation_year').prop('disabled', true);
-        $('#formtools_graduate').prop('disabled', false);
-        $('#formtools_certification').prop('disabled', false);
+        $(".student_form").find("input").prop("disabled", true);
+        $(".other_form").find("input").prop("disabled", false);
       }
-
     }
-
     // ロード時の初期表示を設定
-    change_form($("input[name='profession']:radio:checked").val())
-
+    change_form($("#formtools_profession").val())
+    // 複数送信不可
+    $('button').on('submit', function () {
+      $('button').prop('disabled', true);
+    });
+    // 生年月日位置調整
     $(".birthday_select").find("select").addClass('col mx-3');
-    $("input[name='profession']:radio").change(function () {
+    // フォーム切り替え
+    $("#formtools_profession").change(function () {
       let profession_val = $(this).val();
       change_form(profession_val)
     });

@@ -4,7 +4,7 @@
 {% block page_title %}確認画面{% endblock page_title %}
 {% block main %}
 <div class="card border-info my-3 mx-2 shadow-sm">
-  <table class="table text-center">
+  <table class="table text-center mt-3">
 
     <tr>
       <th>名字</th>
@@ -98,6 +98,6 @@
       </td>
     </tr>
   </table>
-  <a href="{% url 'reception:second_entry_update' joinuser.id %}" class="btn btn-outline-success btn-lg col mx-4">編集する</a>
+  <a href="{% url 'reception:second_entry_update' joinuser.id %}" class="btn btn-success mt-5 mx-auto d-block col-sm-5 mb-3">編集する</a>
 </div>
 {% endblock %}

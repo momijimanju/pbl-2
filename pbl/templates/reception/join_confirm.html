@@ -2,13 +2,11 @@
 {% load static widget_tweaks %}
 {% block title %}参加回数確認画面{% endblock title %}
 {% block main %}
-<div class="card border-info my-3 mx-2 shadow-sm container">
-	<div class = "py-5 mx-auto">
-		<h2>オープンキャンパスの参加は初めてですか？</h2>
-	</div>
-	<div class="row py-5">
-		<a href="{% url 'reception:first_entry_form_preview' %}" class="btn btn-outline-success btn-lg col mx-4">はい</a>
-		<a href="{% url 'reception:second_entry_form' %}" class="btn btn-outline-success btn-lg col mx-4">いいえ</a>
-	</div>
+<div class="card border-info my-3 mx-2 shadow-sm">
+  <h2 class="text-center my-3 mx-3">オープンキャンパスの参加は初めてですか？</h2>
+  <div class="row py-5">
+    <a href="{% url 'reception:first_entry_form_preview' %}" class="btn btn-outline-success btn-lg col mx-4">はい</a>
+    <a href="{% url 'reception:second_entry_form' %}" class="btn btn-outline-success btn-lg col mx-4">いいえ</a>
+  </div>
 </div>
 {% endblock %}

@@ -160,11 +160,7 @@
     <div class="form-group">
       <label>{{ form.gender.label }}</label>
       <div class="form-inline">
-        {% for radio_button in form.gender %}
-        <div class="mr-4">
-          {{ radio_button }}
-        </div>
-        {% endfor %}
+        {{ form.gender }}
         {% if form.gender.errors %}
         <div class="alert alert-danger" role="alert">
           {{ form.gender.errors.0 }}
@@ -202,11 +198,7 @@
     <div class="form-group">
       <label for="street_address">{{ form.profession.label }}</label>
       <div class="form-inline">
-        {% for radio_button in form.profession %}
-        <div class="mr-4">
-          {{ radio_button }}
-        </div>
-        {% endfor %}
+        {{ form.profession }}
         {% if form.profession.errors %}
         <div class="alert alert-danger" role="alert">
           {{ form.profession.errors.0 }}
@@ -285,11 +277,9 @@
     {% if form.errors %}
     {{ form.non_field_errors }}
     {% endif %}
-    <input type="hidden" name="{{ stage_field }}" value="1" />
-    <button type="submit" class="btn btn-success mt-5 mx-auto d-block col-sm-5">入力内容の確認に進む</button>
+    <button type="submit" class="btn btn-success mt-5 mx-auto d-block col-sm-5">編集を終了する</button>
     {% csrf_token %}
   </form>
-
 </div>
 {% endblock %}
 

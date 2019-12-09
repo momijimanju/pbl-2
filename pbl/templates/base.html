@@ -14,12 +14,18 @@
 </head>
 
 <body>
-  <section class="bg-light">
+  <header class="bg-info">
+    <p class="text-center text-light">OICロゴ</p>
+  </header>
+  <section class="bg-light vh-100">
     <div class="container px-2 py-3">
       <h1 class="text-center">{% block page_title %}{% endblock %}</h1>
       {% block main %}{% endblock %}
     </div>
   </section>
+  <footer class="bg-info">
+      <p class="text-center text-light">コピーライトとか</p>
+  </footer>
   {% block js %}{% endblock %}
 </body>
 

@@ -9,7 +9,7 @@ class JoinUser(models.Model):
 
   GENDER_CHOICE = ((1,'男性'), (2,'女性'))
   PROFESSION_CHOICE = ((1,'高校生'), (2,'その他'))
-  SCHOOL_YEAR_CHOICE = ((1, '1年'), (2, '2年'), (3, '3年'), (4, '4年'))
+  SCHOOL_YEAR_CHOICE = ((1, '1年'), (2, '2年'), (3, '3年'))
   SELECT_BOX_CHOICE = ((True, 'はい'), (False, 'いいえ'))
   GRADUATION_YEAR_CHOICES = []
   for r in range(datetime.datetime.now().year, (datetime.datetime.now().year + 11)):
