@@ -72,7 +72,9 @@ class FirstEntryForm(forms.ModelForm):
   def clean_high_school_name(self):
     high_school_name = self.cleaned_data['high_school_name']
     profession = self.cleaned_data['profession']
-    high_school_name = high_school_name.replace(' ', '').replace('　', '')
+    # nullokなので
+    if high_school_name is not None:
+      high_school_name = high_school_name.replace(' ', '').replace('　', '')
     # 学生を選択しているのに空
     if profession == 1:
       if high_school_name is None:
