@@ -13,18 +13,23 @@
 
 </head>
 
-<body>
+<body class="vh-100">
   <header class="bg-info">
-    <p class="text-center text-light">OICロゴ</p>
+
+    <a href="{% url 'reception:join_confirm' %}">
+      <img class="img-responsive mx-auto d-block" src="/static/assets/images/logo.png" width="200" height="60"
+        border="0" />
+
+    </a>
   </header>
-  <section class="bg-light vh-100">
+  <section class="bg-light">
     <div class="container px-2 py-3">
       <h1 class="text-center">{% block page_title %}{% endblock %}</h1>
       {% block main %}{% endblock %}
     </div>
   </section>
   <footer class="bg-info">
-      <p class="text-center text-light">コピーライトとか</p>
+    <p class="text-center text-light">© OKAYAMA INFORMATION COLLEGE.</p>
   </footer>
   {% block js %}{% endblock %}
 </body>

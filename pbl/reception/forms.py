@@ -72,6 +72,7 @@ class FirstEntryForm(forms.ModelForm):
   def clean_high_school_name(self):
     high_school_name = self.cleaned_data['high_school_name']
     profession = self.cleaned_data['profession']
+    high_school_name = high_school_name.replace(' ', '').replace('　', '')
     # 学生を選択しているのに空
     if profession == 1:
       if high_school_name is None:
@@ -142,38 +143,37 @@ class SecondEntryForm(forms.ModelForm):
             'profession': forms.RadioSelect,
     }
 
+  # うまくエラーメッセージが表示できないので詳細なエラーメッセージはなし
   def clean_last_name(self):
     last_name = self.cleaned_data['last_name']
     if last_name is None:
-      raise forms.ValidationError('このフィールドを入力してください')
+      raise forms.ValidationError('')
     return last_name
   def clean_first_name(self):
     first_name = self.cleaned_data['first_name']
     if first_name is None:
-      raise forms.ValidationError('このフィールドを入力してください')
+      raise forms.ValidationError('')
     return first_name
   def clean_phone_number(self):
     phone_number = self.cleaned_data['phone_number']
     if len(phone_number) < 10:
-      raise forms.ValidationError('10桁以上で入力してください')
+      raise forms.ValidationError('')
     if NUMBER_RE.match(r'{}'.format(phone_number)) is None:
-      raise forms.ValidationError('半角数字で入力し、記号や全角数字を使用しないでください')
+      raise forms.ValidationError('')
     return phone_number
 
   def clean_postal_code(self):
     postal_code = self.cleaned_data['postal_code']
     if len(postal_code) < 7:
-      raise forms.ValidationError('7桁で入力してください')
+      raise forms.ValidationError('')
     if NUMBER_RE.match(r'{}'.format(postal_code)) is None:
-      raise forms.ValidationError('半角数字で入力し、記号や全角数字を使用しないでください')
+      raise forms.ValidationError('')
     return postal_code
 
 
   def __init__(self, *args, **kwargs):
     super().__init__(*args, **kwargs)
     # 郵便番号を入力すると住所を自動的に入力するための属性指定
-    self.fields['postal_code'].widget.attrs['onKeyUp'] = "AjaxZip3.zip2addr(this,'','street_address','street_address');"
-    # self.fields['street_address'].widget.attrs['readonly'] = True
     for field in self.fields.values():
       field.widget.attrs['class'] = 'form-control'
 

@@ -4,25 +4,15 @@
 {% block page_title %}検索画面{% endblock page_title %}
 {% block main %}
 <div class="card border-info my-3 mx-2 shadow-sm">
-  <form action="" method="post" class="mx-3 my-3" enctype="multipart/form-data">
+  <form action="{% url 'reception:search_ajax' %}" method="post" class="mx-3 my-3" enctype="multipart/form-data" novalidate="novalidate">
     <div class="row form-group">
       <div class="col">
         <label for="first_name">{{ form.last_name.label }}</label>
         {{ form.last_name }}
-        {% if form.last_name.errors %}
-        <div class="alert alert-danger" role="alert">
-          {{ form.last_name.errors.0 }}
-        </div>
-        {% endif %}
       </div>
       <div class="col">
         <label for="last_name">{{ form.first_name.label }}</label>
         {{ form.first_name }}
-        {% if form.first_name.errors %}
-        <div class="alert alert-danger" role="alert">
-          {{ form.first_name.errors.0 }}
-        </div>
-        {% endif %}
       </div>
     </div>
     <div class="form-group">
@@ -34,54 +24,76 @@
     <div class="form-group">
       <label for="phone_number">{{ form.phone_number.label }}</label>
       {{ form.phone_number }}
-      {% if form.phone_number.errors %}
-      <div class="alert alert-danger" role="alert">
-        {{ form.phone_number.errors.0 }}
-      </div>
-      {% endif %}
     </div>
     <div class="form-group">
       <label for="postal_code">{{ form.postal_code.label }}</label>
       {{ form.postal_code }}
-      {% if form.postal_code.errors %}
-      <div class="alert alert-danger" role="alert">
-        {{ form.postal_code.errors.0 }}
-      </div>
-      {% endif %}
     </div>
-    {% if form.errors %}
-    {{ form.non_field_errors }}
-    {% endif %}
     <button type="submit" class="btn btn-info mt-5 mx-auto d-block col-sm-5">入力内容の確認に進む</button>
     {% csrf_token %}
   </form>
 </div>
+<div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="label1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title" id="label1">登録情報が見つかりませんでした。</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+        入力内容に間違いがない確認してください。
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="label1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="label1">入力内容が正しくありません。</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+          入力漏れや、-(ハイフン)などの記号が含まれていないか確認してください。
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
 {% block js %}
 <script>
   $(function () {
-    //ajax 未定
-    //   let token = '{{ csrf_token }}'; 
-    //   let sendData;
-    //   sendData['last_name'];
-    //   sendData['first_name'];
-    //   sendData['birthday'];
-    //   sendData['phone_number'];
-    //   sendData['postal_code'];
-
-    //   function sendAjax(){
-    //   $.ajax({
-    //     headers: { "X-CSRFToken": token },
-    //     type: 'POST',
-    //     url: '',
-    //     data: sendData,
-    //     dataType: 'text'
-    //   }).fail(function ( error, status){
-    //     console.log(status)
-    //   }).done(function(data){
-    //     console.log(data)
-    //   })
-    // };
+    $("form").submit(function (event) {
+      event.preventDefault();
+      let form = $(this);
+      $.ajax({
+        url: form.prop("action"),
+        method: form.prop("method"),
+        data: form.serialize(),
+        timeout: 10000,
+        dataType: "text",
+      }).done(function (data) {
+        // 文字列からJSONに変換
+        data = JSON.parse(data);
+        if (data.db_search == "False") {
+          $('#modal1').modal('show');
+        } else if (data.db_search == "True") {
+          window.location.href = data.response_url;
+        } else if (data.db_valid_check == "False"){
+          $('#modal2').modal('show');
+        }
+      })
+    });
     // 生年月日位置調整
     $(".birthday_select").find("select").addClass('col mx-3');
   });

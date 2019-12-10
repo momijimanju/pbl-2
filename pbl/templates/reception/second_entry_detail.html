@@ -98,6 +98,9 @@
       </td>
     </tr>
   </table>
-  <a href="{% url 'reception:second_entry_update' joinuser.id %}" class="btn btn-success mt-5 mx-auto d-block col-sm-5 mb-3">編集する</a>
+</div>
+<div class="row mb-3">
+    <a href="{% url 'reception:second_entry_update' joinuser.id %}" class="btn btn-success col mx-5">編集する</a>
+    <a href="{% url 'reception:test_success' %}" class="btn btn-success col mx-5">確定</a>
 </div>
 {% endblock %}
