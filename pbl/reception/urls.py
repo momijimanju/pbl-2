@@ -15,5 +15,5 @@ urlpatterns = [
   # ajax用
   path('secondform/search_ajax', views.search_ajax, name='search_ajax'),
   # 選択画面
-  path('join/', views.join_confirm, name='join_confirm'),
+  path('/', views.join_confirm, name='join_confirm'),
 ]
