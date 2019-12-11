@@ -70,14 +70,14 @@
     {% elif form.profession.data == "2" %}
     <tr>
       <th>{{ form.graduate.label }}:</th>
-      <td>{% if form.graduate.data == True %}はい
+      <td>{% if form.graduate.data == "True" %}はい
           {% else %}いいえ
           {% endif %}
       </td>
     </tr>
     <tr>
       <th>{{ form.certification.label }}:</th>
-      <td>{% if form.certification.data == True %}はい
+      <td>{% if form.certification.data == "True" %}はい
         {% else %}いいえ
         {% endif %}</td>
     </tr>
